@@ -1,6 +1,7 @@
 package com.foodstore.ecommerce_api.domain.model;
 
 import com.foodstore.ecommerce_api.domain.exception.BusinessRuleException;
+import com.foodstore.ecommerce_api.domain.exception.DomainException;
 import com.foodstore.ecommerce_api.domain.model.interfaces.Base;
 
 import java.time.LocalDate;
@@ -26,14 +27,14 @@ public record Categoria(
         return new Categoria(id, eliminado, createdAt, nombre, descripcion);
     }
 
-    private void validateCreatedAt(LocalDate createdAt) {
+    private void validateCreatedAt(LocalDate createdAt) throws DomainException {
         if (createdAt == null)
             throw new BusinessRuleException("La fecha de creacion es obligatoria");
         if (createdAt.isAfter(LocalDate.now()))
             throw new BusinessRuleException("La fecha de creacion no puede ser futura");
     }
 
-    private void validateNombre(String nombre) {
+    private void validateNombre(String nombre) throws DomainException {
         if (nombre == null || nombre.trim().isEmpty())
             throw new BusinessRuleException("El nombre es obligatorio");
 
@@ -42,7 +43,7 @@ public record Categoria(
             throw new BusinessRuleException("El nombre debe tener entre 2 y 100 caracteres");
     }
 
-    private void validateDescripcion(String descripcion) {
+    private void validateDescripcion(String descripcion) throws DomainException {
         if (descripcion != null && descripcion.trim().length() > 500)
             throw new BusinessRuleException("La descripción no puede exceder 500 caracteres");
     }
