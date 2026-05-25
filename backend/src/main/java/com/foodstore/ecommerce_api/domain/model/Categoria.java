@@ -14,6 +14,7 @@ public record Categoria(
         String descripcion
 ) implements Base {
     public Categoria {
+        validateEliminado(eliminado);
         validateDescripcion(descripcion);
         validateNombre(nombre);
         validateCreatedAt(createdAt);
@@ -25,6 +26,10 @@ public record Categoria(
 
     public static Categoria rehydrate(Long id, Boolean eliminado, LocalDate createdAt, String nombre, String descripcion) {
         return new Categoria(id, eliminado, createdAt, nombre, descripcion);
+    }
+
+    private void validateEliminado(Boolean eliminado) throws DomainException {
+        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
     }
 
     private void validateCreatedAt(LocalDate createdAt) throws DomainException {

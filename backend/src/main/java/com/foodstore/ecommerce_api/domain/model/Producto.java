@@ -12,7 +12,7 @@ public record Producto(
         Boolean eliminado,
         LocalDate createdAt,
         String nombre,
-        BigDecimal precio,
+        Double precio,
         String descripcion,
         Integer stock,
         String imagen,
@@ -20,6 +20,8 @@ public record Producto(
         Categoria categoria
 ) implements Base {
     public Producto {
+        validateEliminado(eliminado);
+        validateCreatedAt(createdAt);
         validateNombre(nombre);
         validatePrecio(precio);
         validateStock(stock);
@@ -29,7 +31,7 @@ public record Producto(
 
     public static Producto create (
             String nombre,
-            BigDecimal precio,
+            Double precio,
             String descripcion,
             Integer stock,
             String imagen,
@@ -55,7 +57,7 @@ public record Producto(
             Boolean eliminado,
             LocalDate createdAt,
             String nombre,
-            BigDecimal precio,
+            Double precio,
             String descripcion,
             Integer stock,
             String imagen,
@@ -65,9 +67,20 @@ public record Producto(
         return new Producto(id, eliminado, createdAt, nombre, precio, descripcion, stock, imagen, disponible, categoria);
     }
 
-    private void validatePrecio(BigDecimal precio) throws DomainException {
+    private void validateEliminado(Boolean eliminado) throws DomainException {
+        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
+    }
+
+    private void validateCreatedAt(LocalDate createdAt) throws DomainException {
+        if (createdAt == null)
+            throw new BusinessRuleException("La fecha de creacion es obligatoria");
+        if (createdAt.isAfter(LocalDate.now()))
+            throw new BusinessRuleException("La fecha de creacion no puede ser futura");
+    }
+
+    private void validatePrecio(Double precio) throws DomainException {
         if (precio == null) throw new BusinessRuleException("La precio es obligatorio");
-        if (precio.compareTo(BigDecimal.ZERO) < 0) throw new BusinessRuleException("El precio no puede ser negativo");
+        if (precio < 0.00) throw new BusinessRuleException("El precio no puede ser negativo");
     }
 
     private void validateStock(Integer stock) throws DomainException {
