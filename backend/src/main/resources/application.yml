@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ecommerce-api
+
+  profiles:
+    active: dev
+
+logging:
+  level:
+    com.foodstore.ecommerce_api: DEBUG
+
+app:
+  info:
+    nombre: "FoodStore ecommerce API"
+    version: "1.0.0"
