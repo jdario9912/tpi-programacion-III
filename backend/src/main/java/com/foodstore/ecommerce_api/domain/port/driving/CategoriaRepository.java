@@ -1,4 +1,7 @@
 package com.foodstore.ecommerce_api.domain.port.driving;
 
-public interface CategoriaRepository {
+import com.foodstore.ecommerce_api.domain.model.Categoria;
+
+public interface CategoriaRepository extends Base<Categoria> {
+    Categoria findByName(String name) throws RuntimeException;
 }
