@@ -5,6 +5,7 @@ import com.foodstore.ecommerce_api.domain.exception.DomainException;
 import com.foodstore.ecommerce_api.domain.model.interfaces.Base;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public record DetallePedido(
         Long id,
@@ -26,6 +27,7 @@ public record DetallePedido(
             Integer cantidad,
             Producto producto
     ) {
+        if (cantidad > producto.stock()) throw new BusinessRuleException("Stock insuficiente para " + producto.nombre() + ". Disponible: " + producto.stock() + ", solicitado: " + cantidad);
         return new DetallePedido(null, false, LocalDate.now(), cantidad, null, producto);
     }
 
@@ -63,7 +65,18 @@ public record DetallePedido(
         if (subtotal != null && subtotal < 0.00) throw new BusinessRuleException("El subtotal no puede ser menor a 0.00. Recibido: " + subtotal);
     }
 
-    public void validateProducto(Producto producto) {
+    private void validateProducto(Producto producto) {
         if (producto == null) throw new BusinessRuleException("El producto es obligatorio");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DetallePedido other)) return false;
+        return Objects.equals(this.producto.id(), other.producto.id());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(producto.id());
     }
 }
