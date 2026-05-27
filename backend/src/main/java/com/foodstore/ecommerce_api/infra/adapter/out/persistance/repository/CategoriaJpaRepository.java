@@ -1,13 +1,14 @@
 package com.foodstore.ecommerce_api.infra.adapter.out.persistance.repository;
 
+import com.foodstore.ecommerce_api.domain.exception.ResourceNotFoundException;
 import com.foodstore.ecommerce_api.domain.model.Categoria;
 import com.foodstore.ecommerce_api.domain.port.driving.CategoriaRepository;
 import com.foodstore.ecommerce_api.infra.adapter.out.persistance.entity.CategoriaJpaEntity;
 import com.foodstore.ecommerce_api.infra.adapter.out.persistance.interfaces.CategoriaJpaSpringRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,11 +20,16 @@ public class CategoriaJpaRepository implements CategoriaRepository {
     }
 
     @Override
-    public Categoria findByName(String name) throws RuntimeException {
-//        return jpaRepository.findByNombre(name)
-//                .map(this::toDomain)
-//                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-        return null;
+    public List<Categoria> findByName(String name) throws RuntimeException {
+        return jpaRepository.findByNombre(name)
+                .stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean existsById(Long id) throws RuntimeException {
+        return this.jpaRepository.existsById(id);
     }
 
     @Override
@@ -45,7 +51,7 @@ public class CategoriaJpaRepository implements CategoriaRepository {
     public Categoria findById(Long id) throws RuntimeException {
         return jpaRepository.findById(id)
                 .map(this::toDomain)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria con id " + id + " no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria",  "Categoria con id " + id + " no encontrada", id));
     }
 
     @Override
@@ -57,7 +63,7 @@ public class CategoriaJpaRepository implements CategoriaRepository {
 
     @Override
     public void delete(Long id) throws RuntimeException {
-        jpaRepository.deleteById(id);
+        jpaRepository.softDelete(id);
     }
 
     private Categoria toDomain(CategoriaJpaEntity entity) {

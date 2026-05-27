@@ -60,43 +60,43 @@ public record Usuario(
     }
 
     private void validateEliminado(Boolean eliminado) throws DomainException {
-        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
+        if (eliminado == null) throw new BusinessRuleException("Usuario: eliminado", "El eliminado es obligatorio");
     }
 
     private void validateCreatedAt(LocalDate createdAt) throws DomainException {
         if (createdAt == null)
-            throw new BusinessRuleException("La fecha de creacion es obligatoria");
+            throw new BusinessRuleException("Usuario: fecha de creacion", "La fecha de creacion es obligatoria");
         if (createdAt.isAfter(LocalDate.now()))
-            throw new BusinessRuleException("La fecha de creacion no puede ser futura");
+            throw new BusinessRuleException("Usuario: fecha de creacion", "La fecha de creacion no puede ser futura");
     }
 
     private void validateNombre(String nombre) throws DomainException {
-        if (nombre == null && nombre.trim().length() == 0) throw new BusinessRuleException("El nombre es obligatorio");
-        if (nombre.length() < 2 || nombre.length() > 50) throw new BusinessRuleException("El nombre debe tener entre 2 e 50 caracteres");
+        if (nombre == null && nombre.trim().length() == 0) throw new BusinessRuleException("Usuario: nombre", "El nombre es obligatorio");
+        if (nombre.length() < 2 || nombre.length() > 50) throw new BusinessRuleException("Usuario: nombre", "El nombre debe tener entre 2 e 50 caracteres");
     }
 
     private void validateApellido(String nombre) throws DomainException {
-        if (nombre == null && nombre.trim().length() == 0) throw new BusinessRuleException("El apellido es obligatorio");
-        if (nombre.length() < 2 || nombre.length() > 50) throw new BusinessRuleException("El apellido debe tener entre 2 e 50 caracteres");
+        if (nombre == null && nombre.trim().length() == 0) throw new BusinessRuleException("Usuario: apellido", "El apellido es obligatorio");
+        if (nombre.length() < 2 || nombre.length() > 50) throw new BusinessRuleException("Usuario: apellido", "El apellido debe tener entre 2 e 50 caracteres");
     }
 
     private void validateMail(String mail) throws DomainException {
-        if (mail == null || mail.trim().length() == 0) throw new BusinessRuleException("El mail es obligatorio");
+        if (mail == null || mail.trim().length() == 0) throw new BusinessRuleException("Usuario: email", "El mail es obligatorio");
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Boolean valido = Pattern.matches(EMAIL_REGEX, mail);
-        if (!valido) throw new BusinessRuleException("El formato del mail es incorrecto. Recibido: " + mail);
+        if (!valido) throw new BusinessRuleException("Usuario: email", "El formato del mail es incorrecto. Recibido: " + mail);
     }
 
     private void validatePassword(String password) throws DomainException {
-        if (password == null && password.trim().length() == 0) throw new BusinessRuleException("La password es obligatorio");
-        if (password.length() < 6) throw new BusinessRuleException("La contraseña debe tener al menos 6 caracteres");
+        if (password == null && password.trim().length() == 0) throw new BusinessRuleException("Usuario: contraseña", "La password es obligatorio");
+        if (password.length() < 6) throw new BusinessRuleException("Usuario: contraseña", "La contraseña debe tener al menos 6 caracteres");
     }
 
     private void validateCelular(String celular) throws DomainException {
-        if (celular != null && celular.trim().length() < 0) throw new BusinessRuleException("El celular debe tener 20 caracteres como máximo");
+        if (celular != null && celular.trim().length() < 0) throw new BusinessRuleException("Usuario: celular", "El celular debe tener 20 caracteres como máximo");
     }
 
     private void validateRol(Rol rol) throws DomainException {
-        if (rol == null) throw new BusinessRuleException("El rol es obligatorio");
+        if (rol == null) throw new BusinessRuleException("Usuario: rol", "El rol es obligatorio");
     }
 }

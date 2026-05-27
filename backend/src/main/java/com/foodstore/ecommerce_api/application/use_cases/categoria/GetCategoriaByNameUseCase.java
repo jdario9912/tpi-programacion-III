@@ -5,6 +5,8 @@ import com.foodstore.ecommerce_api.domain.model.Categoria;
 import com.foodstore.ecommerce_api.domain.model.interfaces.TransactionManager;
 import com.foodstore.ecommerce_api.domain.port.driving.CategoriaRepository;
 
+import java.util.List;
+
 public class GetCategoriaByNameUseCase {
     private final CategoriaRepository categoriaRepository;
     private final TransactionManager transactionManager;
@@ -14,10 +16,10 @@ public class GetCategoriaByNameUseCase {
         this.transactionManager = transactionManager;
     }
 
-    public CategoriaResult execute(String name){
+    public List<CategoriaResult> execute(String name){
         return this.transactionManager.execute(()->{
-            Categoria categoria = categoriaRepository.findByName(name);
-            return new CategoriaResult(categoria);
+            List<Categoria> categorias = categoriaRepository.findByName(name);
+            return categorias.stream().map(CategoriaResult::new).toList();
         });
     }
 }

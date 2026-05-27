@@ -27,7 +27,7 @@ public record DetallePedido(
             Integer cantidad,
             Producto producto
     ) {
-        if (cantidad > producto.stock()) throw new BusinessRuleException("Stock insuficiente para " + producto.nombre() + ". Disponible: " + producto.stock() + ", solicitado: " + cantidad);
+        if (cantidad > producto.stock()) throw new BusinessRuleException("DetallePedido: stock", "Stock insuficiente para " + producto.nombre() + ". Disponible: " + producto.stock() + ", solicitado: " + cantidad);
         return new DetallePedido(null, false, LocalDate.now(), cantidad, null, producto);
     }
 
@@ -46,27 +46,27 @@ public record DetallePedido(
     }
 
     private void validateEliminado(Boolean eliminado) throws DomainException {
-        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
+        if (eliminado == null) throw new BusinessRuleException("DetallePedido: eliminado", "El eliminado es obligatorio");
     }
 
     private void validateCreatedAt(LocalDate createdAt) throws DomainException {
         if (createdAt == null)
-            throw new BusinessRuleException("La fecha de creacion es obligatoria");
+            throw new BusinessRuleException("DetallePedido: fecha de creacion", "La fecha de creacion es obligatoria");
         if (createdAt.isAfter(LocalDate.now()))
-            throw new BusinessRuleException("La fecha de creacion no puede ser futura");
+            throw new BusinessRuleException("DetallePedido: fecha de creacion", "La fecha de creacion no puede ser futura");
     }
 
     private void validateCantidad(Integer cantidad) throws DomainException {
-        if (cantidad == null) throw new BusinessRuleException("La cantidad es obligatoria");
-        if (cantidad < 1) throw new BusinessRuleException("La cantidad debe ser como mínimo 1. Recibido: " + cantidad);
+        if (cantidad == null) throw new BusinessRuleException("DetallePedido: cantidad", "La cantidad es obligatoria");
+        if (cantidad < 1) throw new BusinessRuleException("DetallePedido: cantidad", "La cantidad debe ser como mínimo 1. Recibido: " + cantidad);
     }
 
     private void validateSubtotal(Double subtotal) throws DomainException {
-        if (subtotal != null && subtotal < 0.00) throw new BusinessRuleException("El subtotal no puede ser menor a 0.00. Recibido: " + subtotal);
+        if (subtotal != null && subtotal < 0.00) throw new BusinessRuleException("DetallePedido: subtotal", "El subtotal no puede ser menor a 0.00. Recibido: " + subtotal);
     }
 
     private void validateProducto(Producto producto) {
-        if (producto == null) throw new BusinessRuleException("El producto es obligatorio");
+        if (producto == null) throw new BusinessRuleException("DetallePedido: producto", "El producto es obligatorio");
     }
 
     @Override

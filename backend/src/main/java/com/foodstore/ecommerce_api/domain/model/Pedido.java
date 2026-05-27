@@ -46,34 +46,34 @@ public record Pedido(
     }
 
     private void validateEliminado(Boolean eliminado) throws DomainException {
-        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
+        if (eliminado == null) throw new BusinessRuleException("Pedido: eliminado", "El eliminado es obligatorio");
     }
 
     private void validateCreatedAt(LocalDate createdAt) throws DomainException {
         if (createdAt == null)
-            throw new BusinessRuleException("La fecha de creacion es obligatoria");
+            throw new BusinessRuleException("Pedido: fecha de creacion", "La fecha de creacion es obligatoria");
         if (createdAt.isAfter(LocalDate.now()))
-            throw new BusinessRuleException("La fecha de creacion no puede ser futura");
+            throw new BusinessRuleException("Pedido: fecha de creacion", "La fecha de creacion no puede ser futura");
     }
 
     private void validateFecha(LocalDate fecha) throws DomainException {
-        if (fecha == null)  throw new BusinessRuleException("La fecha es obligatoria");
+        if (fecha == null)  throw new BusinessRuleException("Pedido: fecha", "La fecha es obligatoria");
     }
 
     private void validateEstado(Estado estado) throws DomainException {
-        if (estado == null) throw new BusinessRuleException("El estado es obligatorio");
+        if (estado == null) throw new BusinessRuleException("Pedido: estado", "El estado es obligatorio");
     }
 
     private void validateTotal(Double total) throws DomainException {
-        if (total == null && total < 0.0) throw new BusinessRuleException("El total es obligatorio y no puede ser menor a 0.0. Recibido: " + total);
+        if (total == null && total < 0.0) throw new BusinessRuleException("Pedido: total", "El total es obligatorio y no puede ser menor a 0.0. Recibido: " + total);
     }
 
     private void validateFormaPago(FormaPago formaPago) throws DomainException {
-        if (formaPago == null) throw new BusinessRuleException("La forma pago es obligatoria");
+        if (formaPago == null) throw new BusinessRuleException("Pedido: forma de pago", "La forma pago es obligatoria");
     }
 
     private void validateDetalles(Set<DetallePedido> detalles) throws DomainException {
-        if (detalles == null && detalles.size() == 0) throw new BusinessRuleException("El detalle de compra es obligatorio y debe contener al menos uno");
+        if (detalles == null && detalles.size() == 0) throw new BusinessRuleException("Pedido: detalles", "El detalle de compra es obligatorio y debe contener al menos uno");
     }
 
     public void addDetallePedido(Integer cantidad, Producto producto) {

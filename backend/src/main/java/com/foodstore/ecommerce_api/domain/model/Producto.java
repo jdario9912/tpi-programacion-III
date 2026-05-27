@@ -68,37 +68,37 @@ public record Producto(
     }
 
     private void validateEliminado(Boolean eliminado) throws DomainException {
-        if (eliminado == null) throw new BusinessRuleException("El eliminado es obligatorio");
+        if (eliminado == null) throw new BusinessRuleException("Producto: eliminado", "El eliminado es obligatorio");
     }
 
     private void validateCreatedAt(LocalDate createdAt) throws DomainException {
         if (createdAt == null)
-            throw new BusinessRuleException("La fecha de creacion es obligatoria");
+            throw new BusinessRuleException("Pedido: fecha de creacion", "La fecha de creacion es obligatoria");
         if (createdAt.isAfter(LocalDate.now()))
-            throw new BusinessRuleException("La fecha de creacion no puede ser futura");
+            throw new BusinessRuleException("Pedido: fecha de creacion", "La fecha de creacion no puede ser futura");
     }
 
     private void validatePrecio(Double precio) throws DomainException {
-        if (precio == null) throw new BusinessRuleException("La precio es obligatorio");
-        if (precio < 0.00) throw new BusinessRuleException("El precio no puede ser negativo");
+        if (precio == null) throw new BusinessRuleException("Pedido: precio", "La precio es obligatorio");
+        if (precio < 0.00) throw new BusinessRuleException("Pedido: precio", "El precio no puede ser negativo");
     }
 
     private void validateStock(Integer stock) throws DomainException {
-        if (stock == null) throw new BusinessRuleException("El stock es obligatorio");
-        if (stock < 0) throw new BusinessRuleException("El stock no puede ser negativo");
+        if (stock == null) throw new BusinessRuleException("Pedido: stock", "El stock es obligatorio");
+        if (stock < 0) throw new BusinessRuleException("Pedido: stock", "El stock no puede ser negativo");
     }
 
     private void validateNombre(String nombre) throws DomainException {
         if (nombre == null || nombre.trim().isEmpty())
-            throw new BusinessRuleException("El nombre es obligatorio");
+            throw new BusinessRuleException("Pedido: nombre", "El nombre es obligatorio");
 
         String trimmed = nombre.trim();
         if (trimmed.length() < 2 || trimmed.length() > 100)
-            throw new BusinessRuleException("El nombre debe tener entre 2 y 100 caracteres");
+            throw new BusinessRuleException("Pedido: nombre", "El nombre debe tener entre 2 y 100 caracteres");
     }
 
     private void validateDescripcion(String descripcion) throws DomainException {
         if (descripcion != null && descripcion.trim().length() > 500)
-            throw new BusinessRuleException("La descripción no puede exceder 500 caracteres");
+            throw new BusinessRuleException("Pedido: descripcion", "La descripción no puede exceder 500 caracteres");
     }
 }

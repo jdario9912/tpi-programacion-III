@@ -22,6 +22,9 @@ public class SpringTransactionManager implements TransactionManager {
 
     @Override
     public void execute(Runnable operation) {
-
+        transactionTemplate.execute(status -> {
+            operation.run();
+            return null;
+        });
     }
 }

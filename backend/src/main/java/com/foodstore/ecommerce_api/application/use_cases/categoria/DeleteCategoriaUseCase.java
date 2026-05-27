@@ -1,5 +1,6 @@
 package com.foodstore.ecommerce_api.application.use_cases.categoria;
 
+import com.foodstore.ecommerce_api.domain.exception.ResourceNotFoundException;
 import com.foodstore.ecommerce_api.domain.model.interfaces.TransactionManager;
 import com.foodstore.ecommerce_api.domain.port.driving.CategoriaRepository;
 
@@ -14,6 +15,7 @@ public class DeleteCategoriaUseCase {
 
     public void execute(Long id){
         this.transactionManager.execute(()-> {
+            if (!categoriaRepository.existsById(id)) throw new ResourceNotFoundException("Categoria", "Categoria con id " + id + " no existe", id);
             this.categoriaRepository.delete(id);
         });
     }
