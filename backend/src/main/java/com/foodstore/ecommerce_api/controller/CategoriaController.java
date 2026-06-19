@@ -20,26 +20,22 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<CategoriaDto> create(@RequestBody @Valid CategoriaCreate req) {
-        CategoriaDto saved = this.categoriaService.save(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.categoriaService.save(req));
     }
 
     @GetMapping
     public ResponseEntity<List<CategoriaDto>> findAll(@RequestParam(required = false) String param) {
-        List<CategoriaDto> categorias = this.categoriaService.findAll(param);
-        return ResponseEntity.ok(categorias);
+        return ResponseEntity.ok(this.categoriaService.findAll(param));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoriaDto> findById(@PathVariable Long id) {
-        CategoriaDto categoria = this.categoriaService.findById(id);
-        return ResponseEntity.ok(categoria);
+        return ResponseEntity.ok(this.categoriaService.findById(id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaDto> update(@PathVariable Long id, @RequestBody @Valid CategoriaEdit req) {
-        CategoriaDto saved = this.categoriaService.update(id, req);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(this.categoriaService.update(id, req));
     }
 
     @DeleteMapping("/{id}")

@@ -5,8 +5,10 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
@@ -23,5 +25,8 @@ public abstract class Base {
     private Boolean eliminado = false;
 
     @CreationTimestamp
-    private  LocalDate createdAt =  LocalDate.now();
+    private LocalDate createdAt = LocalDate.now();
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

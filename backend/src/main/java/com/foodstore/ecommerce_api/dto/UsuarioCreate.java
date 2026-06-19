@@ -15,6 +15,7 @@ public record UsuarioCreate(
 
         @NotBlank(message = "El email del usuario es obligatorio")
         @Email(message = "El formato del email es inválido")
+        @Size(max = 50, message = "El email del usuario debe tener como maximo 100 carateres")
         String email,
 
         @Size(max = 20, message = "El celular del usuario debe tener como máximo 20 caracteres")

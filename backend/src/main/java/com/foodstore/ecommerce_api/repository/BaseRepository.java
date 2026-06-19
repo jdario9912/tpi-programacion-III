@@ -31,7 +31,7 @@ public abstract class BaseRepository<T> {
 
     public T findByIdOrThrow(Long id) {
         T found = em.find(this.entity, id);
-        if (found == null) throw new ResourceNotFoundException("No se encontro el recurso con id " + id + ".");
+        if (found == null) throw new ResourceNotFoundException("No se encontro " + this.entity.getSimpleName() + " con id " + id + ".");
         return found;
     }
 

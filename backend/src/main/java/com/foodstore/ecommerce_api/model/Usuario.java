@@ -25,19 +25,22 @@ import java.util.Set;
 public class Usuario extends Base {
     @Getter
     @Setter
+    @Column(length = 50, nullable = false)
     private String nombre;
 
     @Getter
     @Setter
+    @Column(length = 50)
     private String apellido;
 
     @Getter
     @Setter
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 50)
     private String mail;
 
     @Getter
     @Setter
+    @Column(length = 20)
     private String celular;
 
     @Getter

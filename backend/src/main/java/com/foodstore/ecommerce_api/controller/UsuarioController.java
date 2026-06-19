@@ -20,26 +20,22 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioDto> save(@RequestBody @Valid UsuarioCreate req) {
-        UsuarioDto saved = this.usuarioService.save(req);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.usuarioService.save(req));
     }
 
     @GetMapping
     public ResponseEntity<List<UsuarioDto>> findAll() {
-        List<UsuarioDto> usuarios = this.usuarioService.findAll();
-        return ResponseEntity.ok(usuarios);
+        return ResponseEntity.ok(this.usuarioService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDto> findById(@PathVariable Long id) {
-        UsuarioDto found = this.usuarioService.findById(id);
-        return ResponseEntity.ok(found);
+        return ResponseEntity.ok(this.usuarioService.findById(id));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDto> update(@PathVariable Long id, @RequestBody @Valid UsuarioEdit req) {
-        UsuarioDto updated = this.usuarioService.update(id, req);
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(this.usuarioService.update(id, req));
     }
 
     @DeleteMapping("/{id}")
