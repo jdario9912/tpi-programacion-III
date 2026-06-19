@@ -4,6 +4,8 @@ import com.foodstore.ecommerce_api.model.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +13,11 @@ import java.util.Set;
 @Entity
 @NamedQuery(
         name = "Usuario.buscarPorEmail",
-        query = "SELECT p FROM Usuario p WHERE p.mail = :email"
+        query = "SELECT u FROM Usuario u WHERE u.mail = :email AND u.eliminado = false"
 )
 @Table(name = "usuarios")
+@SQLRestriction("eliminado = false")
+@SQLDelete(sql = "UPDATE usuarios SET eliminado = true WHERE id = ?")
 @ToString(callSuper = true, exclude = "password")
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
@@ -29,6 +33,7 @@ public class Usuario extends Base {
 
     @Getter
     @Setter
+    @Column(unique = true, nullable = false)
     private String mail;
 
     @Getter
@@ -44,7 +49,8 @@ public class Usuario extends Base {
     private Rol rol;
 
     @Getter
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Pedido> pedidos = new HashSet<>();
 
     public void addPedido (Pedido pedido) {

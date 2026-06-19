@@ -38,10 +38,6 @@ public class Pedido extends Base {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DetallePedido> detallePedidos = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
-
     public void addDetallePedido(DetallePedido detallePedido) throws Exception {
         this.detallePedidos.add(detallePedido);
     }

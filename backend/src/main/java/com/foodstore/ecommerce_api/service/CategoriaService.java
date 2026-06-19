@@ -17,7 +17,7 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaDto save(CategoriaCreate categoriaCreate) {
-        Categoria  categoriaToSave = Categoria.builder().nombre(categoriaCreate.nombre()).descripcion(categoriaCreate.descripcion()).build();
+        Categoria categoriaToSave = Categoria.builder().nombre(categoriaCreate.nombre()).descripcion(categoriaCreate.descripcion()).build();
         Categoria saved = this.categoriaRepository.guardar(categoriaToSave);
         return CategoriaDto.from(saved);
     }
