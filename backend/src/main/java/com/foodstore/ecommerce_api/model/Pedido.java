@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class Pedido extends Base {
     private Estado estado;
 
     @Getter
-    private Double total;
+    private BigDecimal total = BigDecimal.ZERO;
 
     @Getter
     @Setter
@@ -54,6 +55,8 @@ public class Pedido extends Base {
     }
 
     public void calcularTotal() {
-        detallePedidos.forEach(p -> total += p.getSubtotal());
+        this.total = detallePedidos.stream()
+                .map(DetallePedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

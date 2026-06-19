@@ -8,6 +8,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "detalles_pedidos")
 @SQLDelete(sql = "UPDATE detalles_pedidos SET eliminado = true WHERE id = ?")
@@ -21,7 +23,7 @@ public class DetallePedido extends Base {
 
     @Getter
     @Setter
-    private Double subtotal;
+    private BigDecimal subtotal;
 
     @Getter
     @ManyToOne
