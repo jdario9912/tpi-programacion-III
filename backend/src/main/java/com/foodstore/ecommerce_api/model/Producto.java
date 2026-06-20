@@ -12,14 +12,10 @@ import java.math.BigDecimal;
 @Table(name = "productos")
 @SQLRestriction("eliminado = false")
 @SQLDelete(sql = "UPDATE productos SET eliminado = true WHERE id = ?")
-@NamedQuery(
-        name = "Producto.buscarPorCategoria",
-        query = "SELECT p FROM Producto p WHERE p.categoria.id = :idCategoria AND p.eliminado = false"
-)
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "categoria")
+@ToString(callSuper = true, exclude = "categoria")
 @NoArgsConstructor
 @SuperBuilder
 public class Producto extends Base {

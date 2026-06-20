@@ -30,11 +30,11 @@ public class ProductoService {
                 .disponible(producto.disponible() != null ? producto.disponible() : true)
                 .categoria(categoria)
                 .build();
-        return ProductoDto.from(this.productoRepository.guardar(toSave));
+        return ProductoDto.from(this.productoRepository.save(toSave));
     }
 
     public List<ProductoDto> findAll() {
-        List<Producto> productos = this.productoRepository.listarActivos();
+        List<Producto> productos = this.productoRepository.findAll();
         return productos.stream().map(ProductoDto::from).collect(Collectors.toList());
     }
 
@@ -56,7 +56,7 @@ public class ProductoService {
             found.setImagen(producto.imagen() != null ? producto.imagen() : found.getImagen());
             found.setDisponible(producto.disponible() != null ? producto.disponible() : found.getDisponible());
             found.setCategoria(producto.idCategoria() != null ? this.categoriaRepository.findByIdOrThrow(producto.idCategoria()) : found.getCategoria());
-        return ProductoDto.from(this.productoRepository.guardar(found));
+        return ProductoDto.from(this.productoRepository.save(found));
     }
 
     public void delete(Long id) {

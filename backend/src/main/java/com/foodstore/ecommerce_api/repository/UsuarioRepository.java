@@ -1,19 +1,15 @@
 package com.foodstore.ecommerce_api.repository;
 
 import com.foodstore.ecommerce_api.model.Usuario;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UsuarioRepository extends BaseRepository<Usuario> {
-    public UsuarioRepository() {
-        super(Usuario.class);
-    }
-
-    public Optional<Usuario> findByEmail(String email) {
-        List<Usuario> result = em.createNamedQuery("Usuario.buscarPorEmail", Usuario.class).setParameter("email", email).getResultList();
-        return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
-    }
+public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
+    @Query("SELECT u FROM Usuario u WHERE u.mail = :email AND u.eliminado = false")
+    Optional<Usuario> findByEmail(@Param("email") String email);
 }

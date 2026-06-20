@@ -22,3 +22,12 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          orm:
+            jdbc:
+             bind: TRACE

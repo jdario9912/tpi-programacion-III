@@ -11,13 +11,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @SuperBuilder
+@Getter
 public abstract class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Builder.Default

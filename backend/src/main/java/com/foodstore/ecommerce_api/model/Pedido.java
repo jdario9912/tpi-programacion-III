@@ -5,6 +5,8 @@ import com.foodstore.ecommerce_api.model.enums.FormaPago;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,10 +15,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "pedidos")
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true, exclude = "detallePedido")
+@SQLRestriction("eliminado = false")
+@SQLDelete(sql = "UPDATE pedidos SET eliminado = true WHERE id = ?")
+@EqualsAndHashCode(callSuper = true, exclude = "detallePedido")
 @SuperBuilder
 @NoArgsConstructor
+
 public class Pedido extends Base {
     @Getter
     @Setter
@@ -39,7 +44,8 @@ public class Pedido extends Base {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DetallePedido> detallePedidos = new HashSet<>();
 
-    public void addDetallePedido(DetallePedido detallePedido) throws Exception {
+    public void addDetallePedido(DetallePedido detallePedido) {
+        detallePedido.setPedido(this);
         this.detallePedidos.add(detallePedido);
     }
 

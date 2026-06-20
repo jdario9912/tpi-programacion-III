@@ -32,12 +32,12 @@ public class UsuarioService {
                 .rol(Rol.USUARIO)
                 .password(this.passwordEncoder.encode(usuario.password()))
                 .build();
-        Usuario saved = this.usuarioRepository.guardar(usuarioToSave);
+        Usuario saved = this.usuarioRepository.save(usuarioToSave);
         return UsuarioDto.from(saved);
     }
 
     public List<UsuarioDto> findAll() {
-        List<Usuario> usuarios = this.usuarioRepository.listarActivos();
+        List<Usuario> usuarios = this.usuarioRepository.findAll();
         return usuarios.stream().map(UsuarioDto::from).collect(Collectors.toList());
     }
 
@@ -56,7 +56,7 @@ public class UsuarioService {
         usuario.setMail(usuarioEdit.email() != null ? usuarioEdit.email() : usuario.getMail());
         usuario.setCelular(usuarioEdit.celular() != null ? usuarioEdit.celular() : usuario.getCelular());
         usuario.setPassword(usuarioEdit.password() != null ? this.passwordEncoder.encode(usuarioEdit.password()) : usuario.getPassword());
-        Usuario updated = this.usuarioRepository.guardar(usuario);
+        Usuario updated = this.usuarioRepository.save(usuario);
         return UsuarioDto.from(updated);
     }
 

@@ -1,9 +1,6 @@
 package com.foodstore.ecommerce_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
@@ -13,11 +10,12 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "detalles_pedidos")
 @SQLDelete(sql = "UPDATE detalles_pedidos SET eliminado = true WHERE id = ?")
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"pedido", "producto"})
+@ToString(callSuper = true, exclude = {"pedido", "producto"})
 @SuperBuilder
 @NoArgsConstructor
 public class DetallePedido extends Base {
+    @Setter
     @Getter
     private Integer cantidad;
 
@@ -25,8 +23,9 @@ public class DetallePedido extends Base {
     @Setter
     private BigDecimal subtotal;
 
+    @Setter
     @Getter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
@@ -35,21 +34,4 @@ public class DetallePedido extends Base {
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-
-    public void setCantidad(Integer cantidad) throws Exception {
-        if (this.producto != null) this.validarStock(cantidad, this.producto);
-    }
-
-    public void setProducto(Producto producto) throws Exception {
-        this.validarDisponibilidad(producto);
-        this.producto = producto;
-    }
-
-    private void validarDisponibilidad(Producto producto) throws Exception {
-        if (!producto.getDisponible()) throw new Exception("El producto no esta disponible");
-    }
-
-    private void validarStock(Integer cantidad,  Producto producto) throws Exception {
-        if (cantidad > producto.getStock()) throw new Exception("Stock insuficiente");
-    }
 }

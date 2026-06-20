@@ -18,14 +18,14 @@ public class CategoriaService {
 
     public CategoriaDto save(CategoriaCreate categoriaCreate) {
         Categoria categoriaToSave = Categoria.builder().nombre(categoriaCreate.nombre()).descripcion(categoriaCreate.descripcion()).build();
-        Categoria saved = this.categoriaRepository.guardar(categoriaToSave);
+        Categoria saved = this.categoriaRepository.save(categoriaToSave);
         return CategoriaDto.from(saved);
     }
 
     public List<CategoriaDto> findAll(String searchParam) {
         List<Categoria> categorias = searchParam != null ?
                 this.categoriaRepository.findBySearchParam(searchParam) :
-                this.categoriaRepository.listarActivos();
+                this.categoriaRepository.findAll();
         return categorias.stream().map(CategoriaDto::from).collect(Collectors.toList());
     }
 
@@ -38,7 +38,7 @@ public class CategoriaService {
         Categoria categoria = this.categoriaRepository.findByIdOrThrow(id);
         categoria.setNombre(categoriaEdit.nombre() != null ? categoriaEdit.nombre() : categoria.getNombre());
         categoria.setDescripcion(categoriaEdit.descripcion() != null ? categoriaEdit.descripcion() : categoria.getDescripcion());
-        Categoria updated = this.categoriaRepository.guardar(categoria);
+        Categoria updated = this.categoriaRepository.save(categoria);
         return  CategoriaDto.from(updated);
     }
 

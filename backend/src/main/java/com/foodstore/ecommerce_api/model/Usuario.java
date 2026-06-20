@@ -11,10 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NamedQuery(
-        name = "Usuario.buscarPorEmail",
-        query = "SELECT u FROM Usuario u WHERE u.mail = :email AND u.eliminado = false"
-)
 @Table(name = "usuarios")
 @SQLRestriction("eliminado = false")
 @SQLDelete(sql = "UPDATE usuarios SET eliminado = true WHERE id = ?")
