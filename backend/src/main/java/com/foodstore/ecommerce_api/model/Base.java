@@ -30,4 +30,7 @@ public abstract class Base {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Version
+    Integer version;
 }

@@ -7,6 +7,7 @@ import com.foodstore.ecommerce_api.model.Categoria;
 import com.foodstore.ecommerce_api.model.Producto;
 import com.foodstore.ecommerce_api.repository.CategoriaRepository;
 import com.foodstore.ecommerce_api.repository.ProductoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class ProductoService {
         return productos.stream().map(ProductoDto::from).collect(Collectors.toList());
     }
 
+    @Transactional
     public ProductoDto update(Long id, ProductoEdit producto) {
         Producto found = this.productoRepository.findByIdOrThrow(id);
             found.setNombre(producto.nombre() != null ? producto.nombre() : found.getNombre());

@@ -17,7 +17,7 @@ public record PedidoDto(
         Long idUsuario,
         List<DetallePedidoDto> detalles
 ) {
-    public static PedidoDto from (Pedido pedido, Long idUsuario) {
+    public static PedidoDto fromWhitUsuarioId(Pedido pedido, Long idUsuario) {
         return new PedidoDto(
                 pedido.getId(),
                 pedido.getFecha(),
@@ -42,6 +42,36 @@ public record PedidoDto(
                                         detallePedido.getProducto().getCategoria().getNombre(),
                                         detallePedido.getProducto().getCategoria().getDescripcion()
                                         )
+                        )
+                )).toList()
+        );
+    }
+
+    public static PedidoDto from(Pedido pedido) {
+        return new PedidoDto(
+                pedido.getId(),
+                pedido.getFecha(),
+                pedido.getEstado(),
+                pedido.getTotal(),
+                pedido.getFormaPago(),
+                null,
+                pedido.getDetallePedidos().stream().map(detallePedido -> new DetallePedidoDto(
+                        detallePedido.getId(),
+                        detallePedido.getCantidad(),
+                        detallePedido.getSubtotal(),
+                        new ProductoDto(
+                                detallePedido.getProducto().getId(),
+                                detallePedido.getProducto().getNombre(),
+                                detallePedido.getProducto().getPrecio(),
+                                detallePedido.getProducto().getDescripcion(),
+                                detallePedido.getProducto().getStock(),
+                                detallePedido.getProducto().getImagen(),
+                                detallePedido.getProducto().getDisponible(),
+                                new CategoriaDto(
+                                        detallePedido.getProducto().getCategoria().getId(),
+                                        detallePedido.getProducto().getCategoria().getNombre(),
+                                        detallePedido.getProducto().getCategoria().getDescripcion()
+                                )
                         )
                 )).toList()
         );

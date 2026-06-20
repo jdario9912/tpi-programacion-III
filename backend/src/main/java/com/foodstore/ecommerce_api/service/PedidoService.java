@@ -3,6 +3,7 @@ package com.foodstore.ecommerce_api.service;
 import com.foodstore.ecommerce_api.dto.DetallePedidoCreate;
 import com.foodstore.ecommerce_api.dto.PedidoCreate;
 import com.foodstore.ecommerce_api.dto.PedidoDto;
+import com.foodstore.ecommerce_api.dto.PedidoEdit;
 import com.foodstore.ecommerce_api.model.DetallePedido;
 import com.foodstore.ecommerce_api.model.Pedido;
 import com.foodstore.ecommerce_api.model.Producto;
@@ -47,7 +48,7 @@ public class PedidoService {
         usuario.addPedido(pedido);
         Pedido pedidoSaved = this.pedidoRepository.save(pedido);
         this.descontarStock(productos, cantidadesPorId);
-        return PedidoDto.from(pedidoSaved, pedidoCreate.idUsuario());
+        return PedidoDto.fromWhitUsuarioId(pedidoSaved, pedidoCreate.idUsuario());
     }
 
     private List<Producto> obtenerProductosDesdeDetallePedido(List<DetallePedidoCreate> detallePedidoCreate) {
@@ -109,5 +110,30 @@ public class PedidoService {
             p.setStock(p.getStock() - cantidadesPorId.get(p.getId()));
         });
         productoRepository.saveAll(productos);
+    }
+
+    public List<PedidoDto> findAll() {
+        List<Pedido> pedidos = this.pedidoRepository.findAll();
+        return pedidos.stream().map(PedidoDto::from).collect(Collectors.toList());
+    }
+
+    public PedidoDto findById(Long id) {
+        return PedidoDto.from(this.pedidoRepository.findByIdOrThrow(id));
+    }
+
+    public List<PedidoDto> findByUserId(Long userId) {
+        Usuario usuario = this.usuarioRepository.findByIdOrThrow(userId);
+        return usuario.getPedidos().stream().map(PedidoDto::from).collect(Collectors.toList());
+    }
+
+    public PedidoDto update(Long id, PedidoEdit pedido) {
+        Pedido found = this.pedidoRepository.findByIdOrThrow(id);
+        found.setFormaPago(pedido.formaPago() != null ? pedido.formaPago() : found.getFormaPago());
+        found.setEstado(pedido.estado() != null ? pedido.estado() : found.getEstado());
+        return PedidoDto.from(found);
+    }
+
+    public void delete(Long id) {
+        this.pedidoRepository.deleteById(id);
     }
 }
