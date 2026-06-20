@@ -4,6 +4,7 @@ import com.foodstore.ecommerce_api.dto.DetallePedidoCreate;
 import com.foodstore.ecommerce_api.dto.PedidoCreate;
 import com.foodstore.ecommerce_api.dto.PedidoDto;
 import com.foodstore.ecommerce_api.dto.PedidoEdit;
+import com.foodstore.ecommerce_api.exception.BusinessException;
 import com.foodstore.ecommerce_api.model.DetallePedido;
 import com.foodstore.ecommerce_api.model.Pedido;
 import com.foodstore.ecommerce_api.model.Producto;
@@ -31,7 +32,7 @@ public class PedidoService {
     @Transactional
     public PedidoDto save (PedidoCreate pedidoCreate) {
         Usuario usuario = this.usuarioRepository.findByIdOrThrow(pedidoCreate.idUsuario());
-        if (pedidoCreate.detallePedidos().isEmpty()) throw new IllegalArgumentException("El detalle debe debe tener al menos un pedido");
+        if (pedidoCreate.detallePedidos().isEmpty()) throw new BusinessException("El detalle debe debe tener al menos un pedido");
         List<Producto> productos = this.obtenerProductosDesdeDetallePedido(pedidoCreate.detallePedidos());
         this.checkDisponibilidadProductos(productos);
         Map<Long, Integer> cantidadesPorId = this.cantidadesPorId(pedidoCreate.detallePedidos());
@@ -63,7 +64,7 @@ public class PedidoService {
                 .filter(p -> !p.getDisponible())
                 .map(Producto::getNombre)
                 .toList();
-        if (!noDisponibles.isEmpty()) throw new IllegalArgumentException("Los siguientes productos no están disponibles: " + noDisponibles);
+        if (!noDisponibles.isEmpty()) throw new BusinessException("Los siguientes productos no están disponibles: " + noDisponibles);
     }
 
     private Map<Long, Integer> cantidadesPorId(List<DetallePedidoCreate> detallePedidoCreate) {
@@ -79,7 +80,7 @@ public class PedidoService {
                 .filter(p -> !p.tieneStockSuficiente(cantidadesPorId.get(p.getId())))
                 .map(Producto::getNombre)
                 .toList();
-        if (!sinStock.isEmpty()) throw new IllegalArgumentException("Los siguientes productos no tienen stock suficiente: " + sinStock);
+        if (!sinStock.isEmpty()) throw new BusinessException("Los siguientes productos no tienen stock suficiente: " + sinStock);
     }
 
     private void checkCantidades(List<DetallePedidoCreate> detallePedidoCreate) {
@@ -87,7 +88,7 @@ public class PedidoService {
                 .stream().filter(d -> d.cantidad() < 0)
                 .map(DetallePedidoCreate::cantidad)
                 .toList();
-        if (!cantidades.isEmpty()) throw  new IllegalArgumentException("El cantidad debe ser mayor a 0");
+        if (!cantidades.isEmpty()) throw  new BusinessException("El cantidad debe ser mayor a 0");
     }
 
     private List<DetallePedido> crearDetalles(List<Producto> productos, Map<Long, Integer> cantidadesPorId) {

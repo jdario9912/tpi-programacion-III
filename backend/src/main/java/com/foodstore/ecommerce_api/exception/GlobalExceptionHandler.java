@@ -1,6 +1,7 @@
 package com.foodstore.ecommerce_api.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,6 +25,17 @@ public class GlobalExceptionHandler {
                                 .timestamp(LocalDateTime.now())
                                 .build()
                 );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleBussinesException(BusinessException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ErrorResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message(ex.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @ExceptionHandler
