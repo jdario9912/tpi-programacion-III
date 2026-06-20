@@ -4,6 +4,7 @@ import com.foodstore.ecommerce_api.dto.UsuarioCreate;
 import com.foodstore.ecommerce_api.dto.UsuarioDto;
 import com.foodstore.ecommerce_api.dto.UsuarioEdit;
 import com.foodstore.ecommerce_api.service.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Usuario", description = "Gestión de usuario")
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor

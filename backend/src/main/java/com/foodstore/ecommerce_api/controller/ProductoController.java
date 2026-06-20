@@ -4,6 +4,7 @@ import com.foodstore.ecommerce_api.dto.ProductoCreate;
 import com.foodstore.ecommerce_api.dto.ProductoDto;
 import com.foodstore.ecommerce_api.dto.ProductoEdit;
 import com.foodstore.ecommerce_api.service.ProductoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Productos", description = "Gestión de productos")
 @RestController
 @RequestMapping("/productos")
 @AllArgsConstructor

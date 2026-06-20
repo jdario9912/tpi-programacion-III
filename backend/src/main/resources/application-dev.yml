@@ -25,7 +25,10 @@ spring:
 
 logging:
     level:
+      com.foodstore: DEBUG
+      root: INFO
       org:
+        org.springdoc: DEBUG
         hibernate:
           SQL: DEBUG
           orm:

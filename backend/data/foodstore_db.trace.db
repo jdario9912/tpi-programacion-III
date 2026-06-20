@@ -1222,3 +1222,7 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
 	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-06-20 19:09:10.810807-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIO" no encontrada
+Table "USUARIO" not found; SQL statement:
+delete from usuario where id=3 [42102-240]
