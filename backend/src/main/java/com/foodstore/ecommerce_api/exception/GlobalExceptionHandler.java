@@ -67,6 +67,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleUnauthorizedExceptin(UnauthorizeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ErrorResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message(ex.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<com.foodstore.ecommerce_api.exception.ErrorResponse> handleGeneric(Exception ex) {
         System.out.println(ex);
