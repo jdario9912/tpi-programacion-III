@@ -1,6 +1,6 @@
-import type { IUserSession } from "../../../types/IUserSession";
-import { roleBasedNavigation } from "../../../utils/auth";
-import { getUsers, saveUser } from "../../../utils/localStorage";
+import { authService } from "../../../services/auth.service";
+import { redirectByRole } from "../../../utils/auth";
+import { saveUser } from "../../../utils/localStorage";
 
 const form = document.getElementById("form") as HTMLFormElement;
 const inputEmail = document.getElementById("email") as HTMLInputElement;
@@ -9,28 +9,15 @@ const alert = document.getElementById("alert") as HTMLSpanElement;
 
 form?.addEventListener("submit", async (e: SubmitEvent) => {
   e.preventDefault();
-  const usersStoraged = await getUsers();
   const valueEmail = inputEmail.value;
   const valuePassword = inputPassword.value;
 
-  const userFounded = usersStoraged.filter(
-    (u) => u.email == valueEmail && u.password == valuePassword,
-  )[0];
-
-  if (!userFounded) {
+  try {
+    const userLogged = await authService.login(valueEmail, valuePassword);
+    redirectByRole(userLogged.rol);
+    saveUser(userLogged);
+  } catch (error) {
     alert.style.display = "block";
-    return;
+    console.log(error);
   }
-
-  const role = userFounded.role;
-
-  const user: IUserSession = {
-    email: valueEmail,
-    role: role,
-    loggedIn: true,
-  };
-
-  saveUser(user);
-
-  roleBasedNavigation(user.role);
 });

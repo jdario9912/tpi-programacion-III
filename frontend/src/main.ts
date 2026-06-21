@@ -1,5 +1,4 @@
-import { checkAuhtUser, logout } from "./utils/auth";
-import { adminPath, clientPath } from "./utils/const";
+import { logout } from "./utils/auth";
 
 const buttonLogout = document.getElementById(
   "logoutButton",
@@ -7,5 +6,3 @@ const buttonLogout = document.getElementById(
 buttonLogout?.addEventListener("click", () => {
   logout();
 });
-
-checkAuhtUser(adminPath, clientPath);

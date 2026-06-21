@@ -15,7 +15,7 @@ form?.addEventListener("submit", async (e: Event) => {
 
   const userSaved = await addUserToStorage(user);
 
-  roleBasedNavigation(userSaved.role);
+  roleBasedNavigation(userSaved.rol);
 
   formElement.reset();
 });

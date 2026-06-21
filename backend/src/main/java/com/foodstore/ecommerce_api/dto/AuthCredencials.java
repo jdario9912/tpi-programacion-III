@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 public record AuthCredencials(
         @NotBlank(message = "El correo es obligatorio")
         @Email(message = "El correo debe tener un formato correcto")
-        String mail,
+        String email,
 
         @NotBlank(message = "La contraseña es obligatoria")
         String password

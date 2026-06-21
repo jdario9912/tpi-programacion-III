@@ -18,7 +18,7 @@ public class AuthService {
     private final PasswordService passwordService;
 
     public UsuarioDto login(AuthCredencials authCredencials) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(authCredencials.mail());
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(authCredencials.email());
         Boolean verified = passwordService.verificar(authCredencials.password(), usuario.get().getPassword());
         if (!usuario.isPresent() || !verified) throw new UnauthorizeException("Credenciales incorrectas");
         return UsuarioDto.from(usuario.get());

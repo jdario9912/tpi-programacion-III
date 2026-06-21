@@ -1,16 +1,18 @@
 import type { IUser, IUserStoraged } from "../types/IUserStorage";
 import type { Rol } from "../types/Rol";
-import type { IUserSession } from "../types/IUserSession";
+import type { User } from "../api/users/users.types";
 
 const userSessionKey = "userData";
 
-export const saveUser = (user: IUserSession) => {
+export const saveUser = (user: User) => {
   const parseUser = JSON.stringify(user);
   localStorage.setItem(userSessionKey, parseUser);
 };
+
 export const getUSer = () => {
   return localStorage.getItem(userSessionKey);
 };
+
 export const removeUser = () => {
   localStorage.removeItem(userSessionKey);
 };

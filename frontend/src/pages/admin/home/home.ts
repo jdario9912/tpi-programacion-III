@@ -1,14 +1,11 @@
-import type { IUserSession } from "../../../types/IUserSession";
-import { checkRole } from "../../../utils/auth";
-import { clientPath, loginPath } from "../../../utils/const";
-import { getUSer } from "../../../utils/localStorage";
+import type { User } from "../../../api/users/users.types";
+import { loginPath } from "../../../utils/const";
+import { getUSer, removeUser } from "../../../utils/localStorage";
 import { navigate } from "../../../utils/navigate";
 
 const user = getUSer();
-
-if (!user) {
+const parsedUser = JSON.parse(user!) as User;
+if (parsedUser.rol !== "ADMIN") {
+  removeUser();
   navigate(loginPath);
-} else {
-  const parseUser: IUserSession = JSON.parse(user);
-  checkRole(parseUser.role, "admin", clientPath);
 }
