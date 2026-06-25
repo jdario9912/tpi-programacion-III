@@ -22,14 +22,17 @@ async function request<T>(
     },
   });
 
-  console.log(response);
-
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
     throw new Error(error.message ?? `HTTP error ${response.status}`);
   }
 
-  return response.json() as Promise<T>;
+  if (response.status === 204 || response.status === 205) return undefined as T;
+
+  const text = await response.text();
+  if (!text) return undefined as T;
+
+  return JSON.parse(text) as Promise<T>;
 }
 
 export const apiClient = {

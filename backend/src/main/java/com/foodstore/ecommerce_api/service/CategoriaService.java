@@ -43,6 +43,7 @@ public class CategoriaService {
     }
 
     public void delete(Long id) {
+        this.categoriaRepository.findByIdOrThrow(id);
         this.categoriaRepository.deleteById(id);
     }
 }

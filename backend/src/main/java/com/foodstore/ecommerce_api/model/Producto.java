@@ -3,15 +3,13 @@ package com.foodstore.ecommerce_api.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "productos")
-@SQLRestriction("eliminado = false")
-@SQLDelete(sql = "UPDATE productos SET eliminado = true WHERE id = ?")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true, exclude = "categoria")
@@ -38,6 +36,7 @@ public class Producto extends Base {
     private Boolean disponible = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 

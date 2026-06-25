@@ -3,9 +3,7 @@ package com.foodstore.ecommerce_api.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,15 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(force = true)
 @SuperBuilder
 @Getter
+@SoftDelete(columnName = "eliminado", strategy = SoftDeleteType.DELETED)
 public abstract class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-
-    @Builder.Default
-    @Column(nullable = false)
-    private Boolean eliminado = false;
 
     @CreationTimestamp
     private LocalDate createdAt = LocalDate.now();

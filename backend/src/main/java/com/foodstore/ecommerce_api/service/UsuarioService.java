@@ -61,6 +61,7 @@ public class UsuarioService {
     }
 
     public void deleteById(Long id) {
+        this.usuarioRepository.findByIdOrThrow(id);
         this.usuarioRepository.deleteById(id);
     }
 }

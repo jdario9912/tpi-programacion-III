@@ -5,8 +5,6 @@ import com.foodstore.ecommerce_api.model.enums.FormaPago;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,8 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "pedidos")
 @ToString(callSuper = true, exclude = "detallePedido")
-@SQLRestriction("eliminado = false")
-@SQLDelete(sql = "UPDATE pedidos SET eliminado = true WHERE id = ?")
 @EqualsAndHashCode(callSuper = true, exclude = "detallePedido")
 @SuperBuilder
 @NoArgsConstructor

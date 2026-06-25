@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ProductoRepository extends BaseRepository<Producto, Long> {
-    @Query("SELECT p FROM Producto p WHERE p.categoria.id = :idCategoria AND p.eliminado = false")
+    @Query("SELECT p FROM Producto p WHERE p.categoria.id = :idCategoria")
     List<Producto> buscarPorCategoria(@Param("idCategoria") Long idCategoria);
 }

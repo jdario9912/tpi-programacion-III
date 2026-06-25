@@ -135,6 +135,7 @@ public class PedidoService {
     }
 
     public void delete(Long id) {
+        this.pedidoRepository.findByIdOrThrow(id);
         this.pedidoRepository.deleteById(id);
     }
 }

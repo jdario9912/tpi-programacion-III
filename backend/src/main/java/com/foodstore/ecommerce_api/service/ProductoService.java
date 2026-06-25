@@ -62,6 +62,7 @@ public class ProductoService {
     }
 
     public void delete(Long id) {
+        this.productoRepository.findByIdOrThrow(id);
         this.productoRepository.deleteById(id);
     }
 }

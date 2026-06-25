@@ -4,16 +4,12 @@ import com.foodstore.ecommerce_api.model.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
-@SQLRestriction("eliminado = false")
-@SQLDelete(sql = "UPDATE usuarios SET eliminado = true WHERE id = ?")
 @ToString(callSuper = true, exclude = "password")
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
@@ -45,6 +41,7 @@ public class Usuario extends Base {
 
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
     private Rol rol;
 
     @Getter

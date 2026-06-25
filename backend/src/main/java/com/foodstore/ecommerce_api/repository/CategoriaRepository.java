@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CategoriaRepository extends BaseRepository<Categoria, Long> {
-    @Query("SELECT c FROM Categoria c WHERE (c.nombre LIKE %:param% OR c.descripcion LIKE %:param%) AND c.eliminado = false")
+    @Query("SELECT c FROM Categoria c WHERE (c.nombre LIKE %:param% OR c.descripcion LIKE %:param%)")
     List<Categoria> findBySearchParam(@Param("param") String param);
 }
