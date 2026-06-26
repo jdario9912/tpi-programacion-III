@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Carrito — MiComercio</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans min-h-screen">
+        <!-- TOPBAR -->
+        <header
+            class="bg-white border-b border-gray-200 px-6 h-14 flex items-center justify-between sticky top-0 z-10"
+        >
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center"
+                >
+                    <svg
+                        class="w-4 h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 9l1-5h16l1 5M3 9h18M3 9v11a1 1 0 001 1h4v-5h8v5h4a1 1 0 001-1V9"
+                        />
+                    </svg>
+                </div>
+                <span class="text-sm font-medium text-gray-900"
+                    >MiComercio</span
+                >
+            </div>
+            <a
+                href="catalogo.html"
+                class="flex items-center gap-1.5 text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15 19l-7-7 7-7"
+                    />
+                </svg>
+                Seguir comprando
+            </a>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <h1 class="text-xl font-medium text-gray-900 mb-6">Mi carrito</h1>
+
+            <!-- Carrito vacío -->
+            <div
+                id="carrito-vacio"
+                class="hidden flex flex-col items-center justify-center py-24 text-center"
+            >
+                <svg
+                    class="w-16 h-16 text-gray-300 mb-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"
+                    />
+                </svg>
+                <p class="text-gray-400 mb-4">Tu carrito está vacío</p>
+                <a
+                    href="catalogo.html"
+                    class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
+                >
+                    Ver productos
+                </a>
+            </div>
+
+            <!-- Layout carrito con contenido -->
+            <div
+                id="carrito-contenido"
+                class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6"
+            >
+                <!-- Lista de items -->
+                <div
+                    class="lg:col-span-2 flex flex-col gap-3"
+                    id="lista-items"
+                ></div>
+
+                <!-- Resumen del pedido -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="bg-white border border-gray-200 rounded-xl p-5 sticky top-20"
+                    >
+                        <h2 class="text-base font-medium text-gray-900 mb-4">
+                            Resumen del pedido
+                        </h2>
+
+                        <div class="flex flex-col gap-3 text-sm">
+                            <div
+                                class="flex items-center justify-between text-gray-500"
+                            >
+                                <span
+                                    >Subtotal (<span id="res-cantidad">0</span>
+                                    productos)</span
+                                >
+                                <span
+                                    id="res-subtotal"
+                                    class="font-medium text-gray-800"
+                                    >$0</span
+                                >
+                            </div>
+                            <div
+                                class="flex items-center justify-between text-gray-500"
+                            >
+                                <span>Costo de envío</span>
+                                <span
+                                    id="res-envio"
+                                    class="font-medium text-gray-800"
+                                    >$0</span
+                                >
+                            </div>
+                            <div
+                                class="flex items-center justify-between text-xs text-teal-600 bg-teal-50 border border-teal-200 rounded-lg px-3 py-2"
+                                id="envio-gratis-banner"
+                            >
+                                <span>🎉 ¡Envío gratis!</span>
+                                <span>Pedidos +$30.000</span>
+                            </div>
+                            <div
+                                class="border-t border-gray-100 pt-3 flex items-center justify-between"
+                            >
+                                <span class="font-medium text-gray-900"
+                                    >Total</span
+                                >
+                                <span
+                                    id="res-total"
+                                    class="text-lg font-medium text-gray-900"
+                                    >$0</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2 mt-5">
+                            <button
+                                onclick="procederPago()"
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                    />
+                                </svg>
+                                Proceder al pago
+                            </button>
+                            <button
+                                onclick="vaciarCarrito()"
+                                class="w-full border border-gray-200 text-gray-500 hover:bg-red-50 hover:text-red-500 hover:border-red-200 text-sm font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"
+                                    />
+                                </svg>
+                                Vaciar carrito
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div
+            id="toast"
+            class="hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg"
+        >
+            <svg
+                class="w-4 h-4 text-green-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 13l4 4L19 7"
+                />
+            </svg>
+            <span id="toast-msg"></span>
+        </div>
+
+        <script>
+            const ENVIO_GRATIS_DESDE = 30000;
+            const COSTO_ENVIO = 3500;
+
+            function fmt(n) {
+                return "$" + Number(n).toLocaleString("es-AR");
+            }
+
+            const EJEMPLO = [
+                {
+                    id: 1,
+                    nombre: "Auriculares Bluetooth",
+                    descripcion:
+                        "Sonido premium con cancelación de ruido activa.",
+                    precio: 12999,
+                    cantidad: 1,
+                    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80",
+                },
+                {
+                    id: 6,
+                    nombre: 'Smart TV 43"',
+                    descripcion: "4K UHD con Android TV y control por voz.",
+                    precio: 189000,
+                    cantidad: 1,
+                    img: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80",
+                },
+                {
+                    id: 2,
+                    nombre: "Remera básica",
+                    descripcion: "100% algodón, varios colores disponibles.",
+                    precio: 3500,
+                    cantidad: 3,
+                    img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80",
+                },
+            ];
+
+            function getCarrito() {
+                const guardado = JSON.parse(
+                    localStorage.getItem("carrito") || "[]",
+                );
+                return guardado.length ? guardado : EJEMPLO;
+            }
+            function setCarrito(c) {
+                localStorage.setItem("carrito", JSON.stringify(c));
+            }
+
+            function calcularTotales(carrito) {
+                const subtotal = carrito.reduce(
+                    (acc, item) => acc + item.precio * item.cantidad,
+                    0,
+                );
+                const cantTotal = carrito.reduce(
+                    (acc, item) => acc + item.cantidad,
+                    0,
+                );
+                const envio = subtotal >= ENVIO_GRATIS_DESDE ? 0 : COSTO_ENVIO;
+                const total = subtotal + envio;
+                return { subtotal, envio, total, cantTotal };
+            }
+
+            function render() {
+                const carrito = getCarrito();
+                const vacio = document.getElementById("carrito-vacio");
+                const contenido = document.getElementById("carrito-contenido");
+
+                if (!carrito.length) {
+                    vacio.classList.remove("hidden");
+                    contenido.classList.add("hidden");
+                    return;
+                }
+
+                vacio.classList.add("hidden");
+                contenido.classList.remove("hidden");
+
+                // Items
+                document.getElementById("lista-items").innerHTML = carrito
+                    .map(
+                        (item) => `
+        <div class="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 items-start" id="item-${item.id}">
+          <!-- Imagen -->
+          <a href="producto.html?id=${item.id}" class="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-gray-100">
+            <img src="${item.img}" alt="${item.nombre}" class="w-full h-full object-cover"/>
+          </a>
+
+          <!-- Info -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <a href="producto.html?id=${item.id}" class="text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors">${item.nombre}</a>
+                <p class="text-xs text-gray-400 mt-0.5 line-clamp-1">${item.descripcion}</p>
+              </div>
+              <!-- Eliminar -->
+              <button onclick="eliminarItem(${item.id})" title="Eliminar"
+                class="flex-shrink-0 p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between mt-3">
+              <!-- Cantidad -->
+              <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                <button onclick="cambiarCantidad(${item.id}, -1)"
+                  class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/></svg>
+                </button>
+                <span class="w-8 text-center text-sm font-medium text-gray-900">${item.cantidad}</span>
+                <button onclick="cambiarCantidad(${item.id}, 1)"
+                  class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                </button>
+              </div>
+
+              <!-- Precios -->
+              <div class="text-right">
+                <p class="text-sm font-medium text-gray-900">${fmt(item.precio * item.cantidad)}</p>
+                <p class="text-xs text-gray-400">${fmt(item.precio)} c/u</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+                    )
+                    .join("");
+
+                // Resumen
+                const { subtotal, envio, total, cantTotal } =
+                    calcularTotales(carrito);
+                document.getElementById("res-cantidad").textContent = cantTotal;
+                document.getElementById("res-subtotal").textContent =
+                    fmt(subtotal);
+                document.getElementById("res-envio").textContent =
+                    envio === 0 ? "Gratis" : fmt(envio);
+                document.getElementById("res-total").textContent = fmt(total);
+                document.getElementById("envio-gratis-banner").style.display =
+                    subtotal >= ENVIO_GRATIS_DESDE ? "flex" : "none";
+            }
+
+            function cambiarCantidad(id, delta) {
+                const carrito = getCarrito();
+                const item = carrito.find((x) => x.id === id);
+                if (!item) return;
+                item.cantidad = Math.max(1, item.cantidad + delta);
+                setCarrito(carrito);
+                render();
+            }
+
+            function eliminarItem(id) {
+                const carrito = getCarrito().filter((x) => x.id !== id);
+                setCarrito(carrito);
+                render();
+                toast("Producto eliminado del carrito");
+            }
+
+            function vaciarCarrito() {
+                setCarrito([]);
+                render();
+                toast("Carrito vaciado");
+            }
+
+            function procederPago() {
+                toast("Redirigiendo al pago...");
+                // window.location.href = 'pago.html';
+            }
+
+            function toast(msg) {
+                document.getElementById("toast-msg").textContent = msg;
+                const t = document.getElementById("toast");
+                t.classList.remove("hidden");
+                setTimeout(() => t.classList.add("hidden"), 3000);
+            }
+
+            render();
+        </script>
+    </body>
+</html>

@@ -25,7 +25,7 @@ interface CategoriaForm {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const mainLayout = document.getElementById("main-layout") as HTMLDivElement;
-  mainLayout.prepend(headerContainer);
+  mainLayout.prepend(headerContainer(parsedUser.nombre));
   const secondaryLayout = document.getElementById(
     "secondary-layout",
   ) as HTMLDivElement;

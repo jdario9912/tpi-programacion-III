@@ -1,6 +1,5 @@
-import type { IUser } from "../../../types/IUserStorage";
-import { roleBasedNavigation } from "../../../utils/auth";
-import { addUserToStorage } from "../../../utils/localStorage";
+import type { IUser } from "../../types/IUserStorage";
+import { addUserToStorage } from "../../utils/localStorage";
 
 const form = document.querySelector<HTMLFormElement>("#form");
 
@@ -14,8 +13,6 @@ form?.addEventListener("submit", async (e: Event) => {
   };
 
   const userSaved = await addUserToStorage(user);
-
-  roleBasedNavigation(userSaved.rol);
 
   formElement.reset();
 });

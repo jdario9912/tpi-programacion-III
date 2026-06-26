@@ -11,8 +11,8 @@ export default defineConfig({
       input: {
         //d:aplicaion/dist/
         index: resolve(root, "index.html"),
-        login: resolve(root, "src/pages/auth/login/login.html"),
-        registro: resolve(root, "src/pages/auth/registro/registro.html"),
+        login: resolve(root, "src/pages/auth/login.html"),
+        registro: resolve(root, "src/pages/auth/registro.html"),
         adminHome: resolve(root, "src/pages/admin/home.html"),
         clientHome: resolve(root, "src/pages/client/home.html"),
         productos: resolve(root, "src/pages/admin/productos.html"),

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Producto — MiComercio</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 font-sans min-h-screen">
+        <!-- TOPBAR -->
+        <header
+            class="bg-white border-b border-gray-200 px-6 h-14 flex items-center justify-between sticky top-0 z-10"
+        >
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center"
+                >
+                    <svg
+                        class="w-4 h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 9l1-5h16l1 5M3 9h18M3 9v11a1 1 0 001 1h4v-5h8v5h4a1 1 0 001-1V9"
+                        />
+                    </svg>
+                </div>
+                <span class="text-sm font-medium text-gray-900"
+                    >MiComercio</span
+                >
+            </div>
+            <a
+                href="carrito.html"
+                class="flex items-center gap-2 text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"
+                    />
+                </svg>
+                Carrito
+            </a>
+        </header>
+
+        <div class="max-w-5xl mx-auto px-4 py-8" id="contenido">
+            <!-- Se renderiza con JS -->
+        </div>
+
+        <script>
+            const productos = [
+                {
+                    id: 1,
+                    nombre: "Auriculares Bluetooth",
+                    categoria: "Electrónica",
+                    descripcion:
+                        "Sonido premium con cancelación de ruido activa. Batería de 30hs de duración, conectividad multidevice y estuche de carga incluido. Compatible con iOS y Android.",
+                    precio: 12999,
+                    stock: 15,
+                    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+                },
+                {
+                    id: 2,
+                    nombre: "Remera básica",
+                    categoria: "Ropa",
+                    descripcion:
+                        "100% algodón peinado, varios colores disponibles. Corte regular fit, lavado a máquina. Ideal para el día a día.",
+                    precio: 3500,
+                    stock: 80,
+                    img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80",
+                },
+                {
+                    id: 3,
+                    nombre: "Silla ergonómica",
+                    categoria: "Hogar",
+                    descripcion:
+                        "Soporte lumbar ajustable, apoyabrazos regulables, asiento con espuma de alta densidad. Ideal para largas jornadas de home office.",
+                    precio: 45000,
+                    stock: 0,
+                    img: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=800&q=80",
+                },
+                {
+                    id: 4,
+                    nombre: "Pelota de fútbol",
+                    categoria: "Deportes",
+                    descripcion:
+                        "Cuero sintético oficial, tamaño reglamentario N°5. Cámara de butilo de alta resistencia. Apta para césped natural y artificial.",
+                    precio: 8200,
+                    stock: 12,
+                    img: "https://images.unsplash.com/photo-1614632537423-1e6c2e7e0aab?w=800&q=80",
+                },
+                {
+                    id: 5,
+                    nombre: "Granola artesanal",
+                    categoria: "Alimentación",
+                    descripcion:
+                        "Mix de semillas y frutas secas x 500g. Sin azúcar agregada, libre de gluten. Ideal para el desayuno o merienda saludable.",
+                    precio: 2100,
+                    stock: 34,
+                    img: "https://images.unsplash.com/photo-1517093157656-b9eccef91cb1?w=800&q=80",
+                },
+                {
+                    id: 6,
+                    nombre: 'Smart TV 43"',
+                    categoria: "Electrónica",
+                    descripcion:
+                        "4K UHD con Android TV y control por voz. HDR10, 3 puertos HDMI, 2 USB. Soporte para Netflix, Disney+, YouTube y más.",
+                    precio: 189000,
+                    stock: 5,
+                    img: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=800&q=80",
+                },
+                {
+                    id: 7,
+                    nombre: "Zapatillas running",
+                    categoria: "Deportes",
+                    descripcion:
+                        "Suela amortiguada con tecnología Air, disponible en talles 38-46. Upper de malla transpirable, ideal para largas distancias.",
+                    precio: 22500,
+                    stock: 8,
+                    img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80",
+                },
+                {
+                    id: 8,
+                    nombre: "Lámpara de escritorio",
+                    categoria: "Hogar",
+                    descripcion:
+                        "Luz LED regulable en intensidad y temperatura, brazo articulado con 5 posiciones. Puerto USB de carga incluido.",
+                    precio: 6800,
+                    stock: 20,
+                    img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80",
+                },
+                {
+                    id: 9,
+                    nombre: "Campera impermeable",
+                    categoria: "Ropa",
+                    descripcion:
+                        "Resistente al agua con costura sellada, capucha desmontable y bolsillos interiores. Talle S al XXL.",
+                    precio: 18500,
+                    stock: 0,
+                    img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
+                },
+            ];
+
+            function fmt(n) {
+                return "$" + Number(n).toLocaleString("es-AR");
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get("id")) || 1; // fallback al producto 1 para preview
+            const p = productos.find((x) => x.id === id);
+
+            if (!p) {
+                document.getElementById("contenido").innerHTML = `
+        <div class="flex flex-col items-center justify-center py-24 text-center">
+          <p class="text-gray-400 mb-4">Producto no encontrado</p>
+          <a href="catalogo.html" class="text-sm text-indigo-600 hover:underline">Volver al catálogo</a>
+        </div>`;
+            } else {
+                let cantidad = 1;
+
+                document.getElementById("contenido").innerHTML = `
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
+          <a href="catalogo.html" class="hover:text-indigo-600 transition-colors">Catálogo</a>
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <span class="text-indigo-600">${p.categoria}</span>
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <span class="text-gray-600">${p.nombre}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          <!-- Imagen -->
+          <div class="rounded-2xl overflow-hidden bg-white border border-gray-200 aspect-square">
+            <img src="${p.img}" alt="${p.nombre}" class="w-full h-full object-cover"/>
+          </div>
+
+          <!-- Info -->
+          <div class="flex flex-col gap-5">
+            <div>
+              <span class="text-xs text-indigo-600 font-medium">${p.categoria}</span>
+              <h1 class="text-2xl font-medium text-gray-900 mt-1">${p.nombre}</h1>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-3xl font-medium text-gray-900">${fmt(p.precio)}</span>
+              <span class="inline-flex items-center gap-1.5 text-sm font-medium px-3 py-1 rounded-full border
+                ${p.stock > 0 ? "bg-teal-50 text-teal-700 border-teal-200" : "bg-red-50 text-red-500 border-red-200"}">
+                <span class="w-1.5 h-1.5 rounded-full ${p.stock > 0 ? "bg-teal-500" : "bg-red-400"}"></span>
+                ${p.stock > 0 ? "Disponible" : "Sin stock"}
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-500 leading-relaxed">${p.descripcion}</p>
+
+            ${
+                p.stock > 0
+                    ? `
+            <!-- Cantidad -->
+            <div>
+              <p class="text-xs font-medium text-gray-600 mb-2">Cantidad</p>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
+                  <button id="btn-menos"
+                    class="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/></svg>
+                  </button>
+                  <span id="cantidad-display" class="w-10 text-center text-sm font-medium text-gray-900">1</span>
+                  <button id="btn-mas"
+                    class="w-9 h-9 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                  </button>
+                </div>
+                <span class="text-xs text-gray-400">${p.stock} disponibles</span>
+              </div>
+            </div>
+
+            <!-- Total parcial -->
+            <p class="text-xs text-gray-400">Total: <span id="total-parcial" class="font-medium text-gray-700">${fmt(p.precio)}</span></p>
+
+            <!-- Botones -->
+            <div class="flex flex-col gap-2 mt-1">
+              <button id="btn-carrito"
+                class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-3 rounded-xl transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
+                </svg>
+                Agregar al carrito
+              </button>
+              <a href="catalogo.html"
+                class="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium py-3 rounded-xl transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                Volver al catálogo
+              </a>
+            </div>
+            `
+                    : `
+            <div class="flex flex-col gap-2">
+              <p class="text-sm text-red-400 bg-red-50 border border-red-200 rounded-lg px-4 py-3">Este producto no tiene stock disponible.</p>
+              <a href="catalogo.html"
+                class="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium py-3 rounded-xl transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                Volver al catálogo
+              </a>
+            </div>
+            `
+            }
+          </div>
+        </div>
+      `;
+
+                if (p.stock > 0) {
+                    const display = document.getElementById("cantidad-display");
+                    const total = document.getElementById("total-parcial");
+
+                    document
+                        .getElementById("btn-menos")
+                        .addEventListener("click", () => {
+                            if (cantidad > 1) {
+                                cantidad--;
+                                display.textContent = cantidad;
+                                total.textContent = fmt(p.precio * cantidad);
+                            }
+                        });
+                    document
+                        .getElementById("btn-mas")
+                        .addEventListener("click", () => {
+                            if (cantidad < p.stock) {
+                                cantidad++;
+                                display.textContent = cantidad;
+                                total.textContent = fmt(p.precio * cantidad);
+                            }
+                        });
+
+                    document
+                        .getElementById("btn-carrito")
+                        .addEventListener("click", () => {
+                            const carrito = JSON.parse(
+                                localStorage.getItem("carrito") || "[]",
+                            );
+                            const existente = carrito.find(
+                                (x) => x.id === p.id,
+                            );
+                            if (existente) {
+                                existente.cantidad = Math.min(
+                                    existente.cantidad + cantidad,
+                                    p.stock,
+                                );
+                            } else {
+                                carrito.push({
+                                    id: p.id,
+                                    nombre: p.nombre,
+                                    descripcion: p.descripcion,
+                                    precio: p.precio,
+                                    img: p.img,
+                                    cantidad,
+                                });
+                            }
+                            localStorage.setItem(
+                                "carrito",
+                                JSON.stringify(carrito),
+                            );
+                            // Feedback visual
+                            const btn = document.getElementById("btn-carrito");
+                            btn.textContent = "✓ Agregado";
+                            btn.classList.replace(
+                                "bg-indigo-600",
+                                "bg-teal-600",
+                            );
+                            btn.classList.replace(
+                                "hover:bg-indigo-700",
+                                "hover:bg-teal-700",
+                            );
+                            setTimeout(() => {
+                                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/></svg> Agregar al carrito`;
+                                btn.classList.replace(
+                                    "bg-teal-600",
+                                    "bg-indigo-600",
+                                );
+                                btn.classList.replace(
+                                    "hover:bg-teal-700",
+                                    "hover:bg-indigo-700",
+                                );
+                            }, 1500);
+                        });
+                }
+            }
+        </script>
+    </body>
+</html>
