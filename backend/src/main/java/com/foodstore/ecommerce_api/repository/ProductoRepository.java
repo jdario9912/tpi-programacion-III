@@ -11,4 +11,7 @@ import java.util.List;
 public interface ProductoRepository extends BaseRepository<Producto, Long> {
     @Query("SELECT p FROM Producto p WHERE p.categoria.id = :idCategoria")
     List<Producto> buscarPorCategoria(@Param("idCategoria") Long idCategoria);
+
+    @Query("SELECT c FROM Producto c WHERE (c.nombre LIKE %:param% OR c.descripcion LIKE %:param%)")
+    List<Producto> findBySearchParam(@Param("param") String param);
 }

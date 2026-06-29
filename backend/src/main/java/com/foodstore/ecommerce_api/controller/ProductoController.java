@@ -26,8 +26,8 @@ public class ProductoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductoDto>> findAll() {
-        return ResponseEntity.ok(productoService.findAll());
+    public ResponseEntity<List<ProductoDto>> findAll(@RequestParam(required = false) String param) {
+        return ResponseEntity.ok(productoService.findAll(param));
     }
 
     @GetMapping("/{id}")
