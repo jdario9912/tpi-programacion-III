@@ -2,8 +2,8 @@ import type { CreateProductDto, Product } from "../api/products/products.types";
 import { productsApi } from "../api/products/products.api";
 
 export const productsService = {
-  async getAll(): Promise<Product[]> {
-    return await productsApi.getAll();
+  async getAll(searchParam?: string): Promise<Product[]> {
+    return await productsApi.getAll(searchParam);
   },
 
   async getById(id: number): Promise<Product> {
@@ -22,7 +22,7 @@ export const productsService = {
     return await productsApi.delete(id);
   },
 
-  async getByCategoryId(id: number): Promise<Product> {
+  async getByCategoryId(id: number): Promise<Product[]> {
     return await productsApi.getByCategoryId(id);
   },
 };

@@ -7,7 +7,10 @@ import type {
 } from "./products.types";
 
 export const productsApi = {
-  getAll: () => apiClient.get<Product[]>(ENDPOINTS.PRODUCTS.BASE),
+  getAll: (searchParam?: string) =>
+    apiClient.get<Product[]>(
+      `${ENDPOINTS.PRODUCTS.BASE}?param=${encodeURIComponent(searchParam ? searchParam : "")}`,
+    ),
 
   getById: (id: number) => apiClient.get<Product>(ENDPOINTS.PRODUCTS.BY_ID(id)),
 
@@ -20,5 +23,5 @@ export const productsApi = {
   delete: (id: number) => apiClient.delete<void>(ENDPOINTS.PRODUCTS.BY_ID(id)),
 
   getByCategoryId: (id: number) =>
-    apiClient.get<Product>(ENDPOINTS.PRODUCTS.BY_CATEGORY_ID(id)),
+    apiClient.get<Product[]>(ENDPOINTS.PRODUCTS.BY_CATEGORY_ID(id)),
 };

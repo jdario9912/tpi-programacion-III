@@ -4,12 +4,14 @@ export interface Product {
   id: number;
   nombre: string;
   precio: number;
-  description: string;
+  descripcion: string;
   stock: number;
   imagen: string;
   disponible: boolean;
   categoria: Category;
 }
 
-export type CreateProductDto = Omit<Product, "id">;
+export type CreateProductDto = Omit<Product, "id" | "categoria"> & {
+  idCategoria: string;
+};
 export type UpdateProductDto = Partial<CreateProductDto>;

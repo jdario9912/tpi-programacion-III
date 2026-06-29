@@ -25,13 +25,17 @@ export class FormDialog<T> extends Dialog {
     });
   }
 
-  override open(initialData?: Partial<Record<string, string>>): void {
+  override open(initialData?: Partial<Record<string, string | boolean>>): void {
     this.form.reset();
     if (initialData) {
       for (const [key, value] of Object.entries(initialData)) {
         const field = this.form.elements.namedItem(key);
-        if (field && "value" in field) {
-          (field as HTMLInputElement).value = value ?? "";
+        if (!field) continue;
+
+        if (field instanceof HTMLInputElement && field.type === "checkbox") {
+          field.checked = value === true || value === "true";
+        } else if ("value" in field) {
+          (field as HTMLInputElement).value = String(value ?? "");
         }
       }
     }

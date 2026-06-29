@@ -5,6 +5,8 @@ export interface User {
   nombre: string;
   apellido: string;
   email: string;
-  celular: string;
+  celular?: string;
   rol: Rol;
 }
+
+export type UserRegisterDto = Omit<User, "id" | "rol"> & { password: string };

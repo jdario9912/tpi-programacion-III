@@ -116,11 +116,7 @@ const editarCategoriaModal = new FormDialog<CategoriaForm>(
   {
     onSubmit: async (data) => {
       if (categoriaEditandoId === null) return;
-      const response = await categoriesService.update(
-        categoriaEditandoId,
-        data,
-      );
-      console.log({ response });
+      await categoriesService.update(categoriaEditandoId, data);
       editarCategoriaModal.close();
       await cargarCategorias();
     },
