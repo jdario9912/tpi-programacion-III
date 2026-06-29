@@ -17,7 +17,7 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaDto save(CategoriaCreate categoriaCreate) {
-        Categoria categoriaToSave = Categoria.builder().nombre(categoriaCreate.nombre()).descripcion(categoriaCreate.descripcion()).build();
+        Categoria categoriaToSave = Categoria.builder().nombre(categoriaCreate.nombre().toLowerCase().trim()).descripcion(categoriaCreate.descripcion().toLowerCase().trim()).build();
         Categoria saved = this.categoriaRepository.save(categoriaToSave);
         return CategoriaDto.from(saved);
     }
@@ -36,8 +36,8 @@ public class CategoriaService {
 
     public CategoriaDto update (Long id, CategoriaEdit categoriaEdit) {
         Categoria categoria = this.categoriaRepository.findByIdOrThrow(id);
-        categoria.setNombre(categoriaEdit.nombre() != null ? categoriaEdit.nombre() : categoria.getNombre());
-        categoria.setDescripcion(categoriaEdit.descripcion() != null ? categoriaEdit.descripcion() : categoria.getDescripcion());
+        categoria.setNombre(categoriaEdit.nombre() != null ? categoriaEdit.nombre().toLowerCase().trim() : categoria.getNombre());
+        categoria.setDescripcion(categoriaEdit.descripcion() != null ? categoriaEdit.descripcion().toLowerCase().trim() : categoria.getDescripcion());
         Categoria updated = this.categoriaRepository.save(categoria);
         return  CategoriaDto.from(updated);
     }

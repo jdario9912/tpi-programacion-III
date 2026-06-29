@@ -23,9 +23,9 @@ public class ProductoService {
     public ProductoDto save(ProductoCreate producto) {
         Categoria categoria = this.categoriaRepository.findByIdOrThrow(producto.idCategoria());
         Producto toSave = Producto.builder()
-                .nombre(producto.nombre())
+                .nombre(producto.nombre().toLowerCase().trim())
                 .precio(producto.precio())
-                .descripcion(producto.descripcion())
+                .descripcion(producto.descripcion().toLowerCase().trim())
                 .stock(producto.stock())
                 .imagen(producto.imagen())
                 .disponible(producto.disponible() != null ? producto.disponible() : true)
@@ -34,8 +34,10 @@ public class ProductoService {
         return ProductoDto.from(this.productoRepository.save(toSave));
     }
 
-    public List<ProductoDto> findAll() {
-        List<Producto> productos = this.productoRepository.findAll();
+    public List<ProductoDto> findAll(String searchParam) {
+        List<Producto> productos = searchParam != null ?
+                this.productoRepository.findBySearchParam(searchParam.trim()):
+                this.productoRepository.findAll();
         return productos.stream().map(ProductoDto::from).collect(Collectors.toList());
     }
 
@@ -51,9 +53,9 @@ public class ProductoService {
     @Transactional
     public ProductoDto update(Long id, ProductoEdit producto) {
         Producto found = this.productoRepository.findByIdOrThrow(id);
-            found.setNombre(producto.nombre() != null ? producto.nombre() : found.getNombre());
+            found.setNombre(producto.nombre() != null ? producto.nombre().toLowerCase().trim() : found.getNombre());
             found.setPrecio(producto.precio() != null ? producto.precio() : found.getPrecio());
-            found.setDescripcion(producto.descripcion() != null ? producto.descripcion() : found.getDescripcion());
+            found.setDescripcion(producto.descripcion() != null ? producto.descripcion().toLowerCase().trim() : found.getDescripcion());
             found.setStock(producto.stock() != null ? producto.stock() : found.getStock());
             found.setImagen(producto.imagen() != null ? producto.imagen() : found.getImagen());
             found.setDisponible(producto.disponible() != null ? producto.disponible() : found.getDisponible());
