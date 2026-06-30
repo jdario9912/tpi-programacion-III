@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const crearProductoDialog = new FormDialog<ProductoForm>(dialogProducto, {
     onSubmit: async (data) => {
-      console.log(data);
       try {
         await productsService.create({
           ...data,
@@ -78,6 +77,7 @@ const selectCategorias = document.getElementById(
 categorias.forEach((cat) => {
   const itemCategoria = document.createElement("option");
   itemCategoria.value = String(cat.id);
+  itemCategoria.classList.add("capitalize");
   itemCategoria.label = cat.nombre;
   selectCategorias.appendChild(itemCategoria);
 });
@@ -119,7 +119,7 @@ function render(lista: Product[]) {
             <p class="font-medium text-gray-800 capitalize">${p.nombre}</p>
           </td>
           <td class="px-5 py-3.5 text-gray-500 max-w-36 text-nowrap overflow-hidden capitalize">${p.descripcion}</td>
-          <td class="px-5 py-3.5 text-gray-500">${p.categoria.nombre || "—"}</td>
+          <td class="px-5 py-3.5 text-gray-500 capitalize">${p.categoria.nombre || "—"}</td>
           <td class="px-5 py-3.5 font-medium text-gray-800">${p.precio}</td>
           <td class="px-5 py-3.5 text-gray-600">${p.stock}</td>
           <td class="px-5 py-3.5">
@@ -273,6 +273,7 @@ categorias.forEach((cat) => {
   const itemCategoria = document.createElement("option");
   itemCategoria.value = String(cat.id);
   itemCategoria.label = cat.nombre;
+  itemCategoria.classList.add("capitalize");
   filtroCategoria.appendChild(itemCategoria);
 });
 

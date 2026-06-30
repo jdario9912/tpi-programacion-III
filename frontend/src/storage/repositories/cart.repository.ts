@@ -26,6 +26,17 @@ const remove = (id: number): void => {
 
 const getCount = (): number => getAll().length;
 
+const getById = (id: number): ProductCartItem | undefined =>
+  getAll().find((i) => i.id === id);
+
 const clear = (): void => storage.remove(KEY);
 
-export const cartRepository = { getAll, add, update, remove, clear, getCount };
+export const cartRepository = {
+  getAll,
+  add,
+  update,
+  remove,
+  clear,
+  getCount,
+  getById,
+};

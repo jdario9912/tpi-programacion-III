@@ -171,7 +171,11 @@ if (producto.stock > 0) {
       precio: producto.precio,
       cantidad: cantidad,
       categoria: producto.categoria.nombre,
+      imagen: producto.imagen,
     });
+    const carritoBadge = document.getElementById(
+      "carrito-badge",
+    ) as HTMLSpanElement;
 
     carritoBadge.textContent = String(cartRepository.getCount());
 
