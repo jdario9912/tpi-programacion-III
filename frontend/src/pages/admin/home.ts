@@ -1,6 +1,8 @@
 import type { User } from "../../api/users/users.types";
 import { asideBarContainer } from "../../components/aside-bar";
 import { headerContainer, initHeader } from "../../components/header";
+import { categoriesService } from "../../services/categories.service";
+import { productsService } from "../../services/products.service";
 import { loginPath } from "../../utils/const";
 import { getUSer, removeUser } from "../../utils/localStorage";
 import { navigate } from "../../utils/navigate";
@@ -12,7 +14,7 @@ if (parsedUser.rol !== "ADMIN") {
   navigate(loginPath);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const mainLayout = document.getElementById("main-layout") as HTMLDivElement;
   mainLayout.prepend(headerContainer(parsedUser.nombre));
   const secondaryLayout = document.getElementById(
@@ -21,4 +23,29 @@ document.addEventListener("DOMContentLoaded", () => {
   secondaryLayout.prepend(asideBarContainer);
 
   initHeader();
+  const catAct = await categoriesService.getAll();
+  const categoriasActivasCount = document.getElementById(
+    "categorias-activas-count",
+  ) as HTMLParagraphElement;
+  categoriasActivasCount.textContent = catAct.length.toString();
+
+  const prodReg = await productsService.getAll();
+  const productosRegistradosCount = document.getElementById(
+    "productos-registrados-count",
+  ) as HTMLParagraphElement;
+  productosRegistradosCount.textContent = prodReg.length.toString();
+
+  // const pedPend = await pedidos.getAll();
+  // const pedidosPendientesCount = document.getElementById(
+  // "pedidos-pendientes-count"
+  // ) as HTMLParagraphElement;
+  // pedidosPendientesCount.textContent = pedPend.map(pro => pro.).length.toString();
+
+  const prodDisp = await productsService.getAll();
+  const productosDisponiblesCount = document.getElementById(
+    "productos-disponibles-count",
+  ) as HTMLParagraphElement;
+  productosDisponiblesCount.textContent = prodDisp
+    .map((pro) => pro.disponible)
+    .length.toString();
 });

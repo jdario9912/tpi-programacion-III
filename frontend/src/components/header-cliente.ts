@@ -5,7 +5,7 @@ export const headerCliente = (user: string) => {
     <header
       class="bg-white border-b border-gray-200 px-6 h-14 flex items-center justify-between sticky top-0 z-10"
     >
-      <div class="flex items-center gap-3">
+      <a class="flex items-center gap-3" href="home.html">
         <div
           class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center"
         >
@@ -28,7 +28,7 @@ export const headerCliente = (user: string) => {
 
         </div>
         <span class="text-sm font-medium text-gray-900">Food Store</span>
-      </div>
+      </a>
       <div class="flex items-center gap-x-4">
         <div>${user}</div>
         <a

@@ -203,7 +203,7 @@
           <input
             id="producto-imagen"
             name="imagen"
-            type="url"
+            type="text"
             class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             value="http://imagen.com"
           />
@@ -333,7 +333,7 @@
           <input
             id="producto-imagen"
             name="imagen"
-            type="url"
+            type="text"
             class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             value="http://imagen.com"
           />
@@ -410,203 +410,6 @@
         </div>
       </div>
     </dialog>
-
-    <!-- MODAL Ver detalle -->
-    <div
-      id="modal-ver"
-      class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-    >
-      <div class="bg-white rounded-xl shadow-lg w-full max-w-sm mx-4 p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-base font-medium text-gray-900">
-            Detalle del producto
-          </h2>
-          <button
-            onclick="cerrarVer()"
-            class="text-gray-400 hover:text-gray-600"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div id="detalle-body" class="flex flex-col gap-3 text-sm"></div>
-        <div class="flex justify-end mt-5">
-          <button
-            onclick="cerrarVer()"
-            class="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Toast -->
-    <div
-      id="toast"
-      class="hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg"
-    >
-      <svg
-        class="w-4 h-4 text-green-400"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M5 13l4 4L19 7"
-        />
-      </svg>
-      <span id="toast-msg"></span>
-    </div>
-
-    <!-- <script> -->
-    <!--   function abrirModal() { -->
-    <!--     idEdit = null; -->
-    <!--     document.getElementById("modal-titulo").textContent = "Nuevo producto"; -->
-    <!--     ["c-nombre", "c-desc", "c-precio", "c-stock"].forEach( -->
-    <!--       (id) => (document.getElementById(id).value = ""), -->
-    <!--     ); -->
-    <!--     document.getElementById("c-cat").value = ""; -->
-    <!--     document.getElementById("c-estado").value = "disponible"; -->
-    <!--     ["err-nombre", "err-precio"].forEach((id) => -->
-    <!--       document.getElementById(id).classList.add("hidden"), -->
-    <!--     ); -->
-    <!--     document.getElementById("modal").classList.remove("hidden"); -->
-    <!--     setTimeout(() => document.getElementById("c-nombre").focus(), 50); -->
-    <!--   } -->
-    <!---->
-    <!--   function editar(id) { -->
-    <!--     const p = productos.find((x) => x.id === id); -->
-    <!--     if (!p) return; -->
-    <!--     idEdit = id; -->
-    <!--     document.getElementById("modal-titulo").textContent = "Editar producto"; -->
-    <!--     document.getElementById("c-nombre").value = p.nombre; -->
-    <!--     document.getElementById("c-desc").value = p.desc; -->
-    <!--     document.getElementById("c-precio").value = p.precio; -->
-    <!--     document.getElementById("c-stock").value = p.stock; -->
-    <!--     document.getElementById("c-cat").value = p.categoria; -->
-    <!--     document.getElementById("c-estado").value = p.estado; -->
-    <!--     ["err-nombre", "err-precio"].forEach((id) => -->
-    <!--       document.getElementById(id).classList.add("hidden"), -->
-    <!--     ); -->
-    <!--     document.getElementById("modal").classList.remove("hidden"); -->
-    <!--   } -->
-    <!---->
-    <!--   function cerrarModal() { -->
-    <!--     document.getElementById("modal").classList.add("hidden"); -->
-    <!--   } -->
-    <!---->
-    <!--   function guardar() { -->
-    <!--     const nombre = document.getElementById("c-nombre").value.trim(); -->
-    <!--     const precio = parseFloat(document.getElementById("c-precio").value); -->
-    <!--     let ok = true; -->
-    <!--     if (!nombre) { -->
-    <!--       document.getElementById("err-nombre").classList.remove("hidden"); -->
-    <!--       ok = false; -->
-    <!--     } else { -->
-    <!--       document.getElementById("err-nombre").classList.add("hidden"); -->
-    <!--     } -->
-    <!--     if (!precio || precio <= 0) { -->
-    <!--       document.getElementById("err-precio").classList.remove("hidden"); -->
-    <!--       ok = false; -->
-    <!--     } else { -->
-    <!--       document.getElementById("err-precio").classList.add("hidden"); -->
-    <!--     } -->
-    <!--     if (!ok) return; -->
-    <!--     const data = { -->
-    <!--       nombre, -->
-    <!--       precio, -->
-    <!--       desc: document.getElementById("c-desc").value.trim(), -->
-    <!--       stock: parseInt(document.getElementById("c-stock").value) || 0, -->
-    <!--       categoria: document.getElementById("c-cat").value, -->
-    <!--       estado: document.getElementById("c-estado").value, -->
-    <!--     }; -->
-    <!--     if (idEdit !== null) { -->
-    <!--       const i = productos.findIndex((x) => x.id === idEdit); -->
-    <!--       productos[i] = { ...productos[i], ...data }; -->
-    <!--       toast("Producto actualizado correctamente"); -->
-    <!--     } else { -->
-    <!--       productos.push({ id: sigId++, ...data }); -->
-    <!--       toast("Producto creado correctamente"); -->
-    <!--     } -->
-    <!--     cerrarModal(); -->
-    <!--     filtrar(); -->
-    <!--   } -->
-    <!---->
-    <!--   function ver(id) { -->
-    <!--     const p = productos.find((x) => x.id === id); -->
-    <!--     if (!p) return; -->
-    <!--     const e = estadoConfig[p.estado]; -->
-    <!--     document.getElementById("detalle-body").innerHTML = ` -->
-    <!--     <div class="flex items-start justify-between"> -->
-    <!--       <div> -->
-    <!--         <p class="font-medium text-gray-900 text-base">${p.nombre}</p> -->
-    <!--         <p class="text-gray-400 text-xs mt-0.5">${p.categoria || "Sin categoría"}</p> -->
-    <!--       </div> -->
-    <!--       <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${e.cls}"> -->
-    <!--         <span class="w-1.5 h-1.5 rounded-full ${e.dot}"></span>${e.label} -->
-    <!--       </span> -->
-    <!--     </div> -->
-    <!--     ${p.desc ? `<p class="text-gray-500 text-sm">${p.desc}</p>` : ""} -->
-    <!--     <div class="grid grid-cols-2 gap-3 mt-1"> -->
-    <!--       <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-400 mb-1">Precio</p><p class="font-medium text-gray-800">${fmt(p.precio)}</p></div> -->
-    <!--       <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-400 mb-1">Stock</p><p class="font-medium text-gray-800">${p.stock} unidades</p></div> -->
-    <!--     </div>`; -->
-    <!--     document.getElementById("modal-ver").classList.remove("hidden"); -->
-    <!--   } -->
-    <!--   function cerrarVer() { -->
-    <!--     document.getElementById("modal-ver").classList.add("hidden"); -->
-    <!--   } -->
-    <!---->
-    <!--   function abrirDel(id) { -->
-    <!--     idDel = id; -->
-    <!--     document.getElementById("del-nombre").textContent = productos.find( -->
-    <!--       (x) => x.id === id, -->
-    <!--     )?.nombre; -->
-    <!--     document.getElementById("modal-del").classList.remove("hidden"); -->
-    <!--   } -->
-    <!--   function cerrarDel() { -->
-    <!--     document.getElementById("modal-del").classList.add("hidden"); -->
-    <!--     idDel = null; -->
-    <!--   } -->
-    <!--   function confirmarDel() { -->
-    <!--     productos = productos.filter((x) => x.id !== idDel); -->
-    <!--     cerrarDel(); -->
-    <!--     filtrar(); -->
-    <!--     toast("Producto eliminado"); -->
-    <!--   } -->
-    <!---->
-    <!--   function toast(msg) { -->
-    <!--     document.getElementById("toast-msg").textContent = msg; -->
-    <!--     const t = document.getElementById("toast"); -->
-    <!--     t.classList.remove("hidden"); -->
-    <!--     setTimeout(() => t.classList.add("hidden"), 3000); -->
-    <!--   } -->
-    <!---->
-    <!--   document.addEventListener("keydown", (e) => { -->
-    <!--     if (e.key === "Escape") { -->
-    <!--       cerrarModal(); -->
-    <!--       cerrarDel(); -->
-    <!--       cerrarVer(); -->
-    <!--     } -->
-    <!--   }); -->
-    <!---->
-    <!--   render(productos); -->
-    <!-- </script> -->
   </body>
   <script type="module" src="productos.ts"></script>
 </html>

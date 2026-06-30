@@ -66,7 +66,7 @@ function render() {
       (item) => `
         <div class="bg-white border border-gray-200 rounded-xl p-4 flex gap-4 items-start" id="item-${item.id}">
           <a href="producto.html?id=${item.id}" class="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-gray-100">
-            <img src="${item.imagen}" alt="${item.nombre}" class="w-full h-full object-cover"/>
+            <img src="/imagenes/${item.imagen}" alt="${item.nombre}" class="w-full h-full object-cover"/>
           </a>
 
           <div class="flex-1 min-w-0">
@@ -171,6 +171,10 @@ function cambiarCantidad(id: number, delta: number) {
 
 function eliminarItem(id: number) {
   cartRepository.remove(id);
+  const carritoBadge = document.getElementById(
+    "carrito-badge",
+  ) as HTMLSpanElement;
+  carritoBadge.textContent = String(cartRepository.getCount());
   render();
 }
 

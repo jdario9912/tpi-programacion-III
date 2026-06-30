@@ -34,7 +34,6 @@ if (!producto) {
         </div>`;
 } else {
   contenido.innerHTML = `
-        <!-- Breadcrumb -->
         <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
           <a href="catalogo.html" class="hover:text-indigo-600 transition-colors">Catálogo</a>
           <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -45,12 +44,10 @@ if (!producto) {
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-          <!-- Imagen -->
           <div class="rounded-2xl overflow-hidden bg-white border border-gray-200 aspect-square">
-            <img src="${producto.imagen}" alt="${producto.nombre}" class="w-full h-full object-cover"/>
+            <img src="/imagenes/${producto.imagen}" alt="${producto.nombre}" class="w-full h-full object-cover"/>
           </div>
 
-          <!-- Info -->
           <div class="flex flex-col gap-5">
             <div>
               <span class="text-xs text-indigo-600 font-medium">${producto.categoria.nombre}</span>
@@ -89,10 +86,8 @@ if (!producto) {
               </div>
             </div>
 
-            <!-- Total parcial -->
             <p class="text-xs text-gray-400">Total: <span id="total-parcial" class="font-medium text-gray-700">${producto.precio}</span></p>
 
-            <!-- Botones -->
             <div class="flex flex-col gap-2 mt-1">
               <button id="btn-carrito"
                 ${!producto.disponible ? "disabled" : ""}                class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-3 rounded-xl transition-colors disabled:bg-gray-500">
@@ -176,7 +171,7 @@ if (producto.stock > 0) {
     const carritoBadge = document.getElementById(
       "carrito-badge",
     ) as HTMLSpanElement;
-
+    carritoBadge.classList.remove("hidden");
     carritoBadge.textContent = String(cartRepository.getCount());
 
     btnCarrito.textContent = "✓ Agregado";

@@ -8,6 +8,7 @@ import { headerCliente } from "../../components/header-cliente";
 import { categoriesService } from "../../services/categories.service";
 import { productsService } from "../../services/products.service";
 import type { Category } from "../../api/categories/categories.types";
+import { cartRepository } from "../../storage/repositories/cart.repository";
 
 const user = getUSer();
 const parsedUser = JSON.parse(user!) as User;
@@ -36,7 +37,7 @@ function renderProductos(lista: Product[]) {
         <a href="producto.html?id=${p.id}"
           class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col">
           <div class="aspect-video overflow-hidden bg-gray-100">
-            <img src="${p.imagen}" alt="${p.nombre}" class="w-full h-full object-cover"/>
+            <img src="/imagenes/${p.imagen}" alt="${p.nombre}" class="w-full h-full object-cover"/>
           </div>
           <div class="p-4 flex flex-col gap-2 flex-1">
             <span class="text-xs text-indigo-600 font-medium capitalize">${p.categoria.nombre}</span>
@@ -77,6 +78,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const mainLayout = document.getElementById("main-layout") as HTMLDivElement;
   mainLayout.prepend(headerCliente(parsedUser.nombre));
   initHeader();
+
+  const carritoBadge = document.getElementById(
+    "carrito-badge",
+  ) as HTMLSpanElement;
+  const cartCount = cartRepository.getCount();
+  if (cartCount > 0) {
+    carritoBadge.classList.remove("hidden");
+    carritoBadge.textContent = String(cartCount);
+  }
 });
 
 await cargarCategorias();
@@ -87,7 +97,7 @@ const containerCategorias = document.getElementById(
 ) as HTMLSelectElement;
 categorias.forEach((cat) => {
   const containerCategoria = document.createElement("div") as HTMLDivElement;
-  containerCategoria.innerHTML = `<button id="cat-${cat.id}">${cat.nombre}</button>`;
+  containerCategoria.innerHTML = `<button id="cat-${cat.id}" class="capitalize">${cat.nombre}</button>`;
   const boton = containerCategoria.querySelector("button") as HTMLButtonElement;
   boton.addEventListener("click", async () => {
     await cargarProductosPorCategoria(String(cat.id));
