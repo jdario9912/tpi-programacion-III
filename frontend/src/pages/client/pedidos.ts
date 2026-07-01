@@ -33,27 +33,22 @@ const estadoConf = {
   PENDIENTE: {
     label: "Pendiente",
     cls: "bg-amber-50 text-amber-700 border-amber-200",
-    dot: "bg-amber-400",
-    filtro: "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100",
+    dot: "bg-amber-500",
   },
-  EN_CAMINO: {
-    label: "En camino",
+  TERMINADO: {
+    label: "Terminado",
     cls: "bg-indigo-50 text-indigo-700 border-indigo-200",
     dot: "bg-indigo-500",
-    filtro:
-      "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100",
   },
-  ENTREGADO: {
-    label: "Entregado",
+  CONFIRMADO: {
+    label: "Confirmado",
     cls: "bg-teal-50 text-teal-700 border-teal-200",
     dot: "bg-teal-500",
-    filtro: "bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100",
   },
   CANCELADO: {
     label: "Cancelado",
-    cls: "bg-red-50 text-red-500 border-red-200",
+    cls: "bg-red-50 text-red-600 border-red-200",
     dot: "bg-red-400",
-    filtro: "bg-red-50 text-red-500 border-red-200 hover:bg-red-100",
   },
 };
 
@@ -90,7 +85,7 @@ async function renderPedidos() {
           </span>
 
           <div class="text-right flex-shrink-0">
-            <p class="text-sm font-medium text-gray-900">${p.total}</p>
+            <p class="text-sm font-medium text-gray-900">$${p.total}</p>
             <p class="text-xs text-gray-400">total</p>
           </div>
 

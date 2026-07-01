@@ -42,12 +42,12 @@ const ESTADO_CONFIG: Record<
     dot: "bg-amber-400",
   },
   CONFIRMADO: {
-    label: "En camino",
+    label: "Confirmado",
     cls: "bg-indigo-50 text-indigo-700 border-indigo-200",
     dot: "bg-indigo-500",
   },
   TERMINADO: {
-    label: "Entregado",
+    label: "Terminado",
     cls: "bg-teal-50 text-teal-700 border-teal-200",
     dot: "bg-teal-500",
   },
@@ -96,7 +96,8 @@ function renderHeader(pedido: Order): void {
   getEl("breadcrumb-id").textContent = `Pedido #${pedido.id}`;
   getEl("pedido-titulo").textContent = `Pedido #${pedido.id}`;
   getEl("pedido-fecha").textContent = pedido.fecha;
-  getEl("pedido-pago").textContent = pedido.formaPago;
+  getEl("pedido-pago").textContent =
+    FORMA_PAGO_LABEL[pedido.formaPago as unknown as string];
   getEl("pedido-cantidad").textContent =
     `${cantProd} ítem${cantProd !== 1 ? "s" : ""}`;
   getEl("pedido-total").textContent = fmt(total);

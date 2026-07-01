@@ -31,13 +31,9 @@ export abstract class Dialog {
   }
 
   private handleBackdropClick(e: MouseEvent): void {
-    const rect = this.element.getBoundingClientRect();
-    const dentro =
-      e.clientX >= rect.left &&
-      e.clientX <= rect.right &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom;
-    if (!dentro) this.close();
+    if (e.target === this.element) {
+      this.close();
+    }
   }
 
   open(): void {

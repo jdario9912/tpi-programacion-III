@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const crearPedidoDialog = new FormDialog<ProductoForm>(dialogPedido, {
     onSubmit: async (data) => {
+      console.log({ data });
       const carrito = cartRepository.getAll();
       if (!carrito.length) return;
 
