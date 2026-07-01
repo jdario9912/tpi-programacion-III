@@ -13,6 +13,7 @@ export default defineConfig({
         index: resolve(root, "index.html"),
         login: resolve(root, "src/pages/auth/login.html"),
         registro: resolve(root, "src/pages/auth/registro.html"),
+        unauthorized: resolve(root, "src/pages/auth/unauthorized.html"),
         adminHome: resolve(root, "src/pages/admin/home.html"),
         productos: resolve(root, "src/pages/admin/productos.html"),
         pedidos: resolve(root, "src/pages/admin/pedidos.html"),
