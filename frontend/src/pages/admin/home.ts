@@ -2,6 +2,7 @@ import type { User } from "../../api/users/users.types";
 import { asideBarContainer } from "../../components/aside-bar";
 import { headerContainer, initHeader } from "../../components/header";
 import { categoriesService } from "../../services/categories.service";
+import { ordersService } from "../../services/orders.service";
 import { productsService } from "../../services/products.service";
 import { loginPath } from "../../utils/const";
 import { getUSer, removeUser } from "../../utils/localStorage";
@@ -35,11 +36,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   ) as HTMLParagraphElement;
   productosRegistradosCount.textContent = prodReg.length.toString();
 
-  // const pedPend = await pedidos.getAll();
-  // const pedidosPendientesCount = document.getElementById(
-  // "pedidos-pendientes-count"
-  // ) as HTMLParagraphElement;
-  // pedidosPendientesCount.textContent = pedPend.map(pro => pro.).length.toString();
+  const pedPend = await ordersService.getAll();
+  const pedidosPendientesCount = document.getElementById(
+    "pedidos-pendientes-count",
+  ) as HTMLParagraphElement;
+  pedidosPendientesCount.textContent = pedPend
+    .map((pro) => pro.estado == "PENDIENTE")
+    .length.toString();
 
   const prodDisp = await productsService.getAll();
   const productosDisponiblesCount = document.getElementById(

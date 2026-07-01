@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-type EstadoPedido = "PENDIENTE" | "EN_CAMINO" | "ENTREGADO" | "CANCELADO";
+type EstadoPedido = "PENDIENTE" | "CONFIRMADO" | "TERMINADO" | "CANCELADO";
 
 const ESTADO_CONFIG: Record<
   EstadoPedido,
@@ -41,12 +41,12 @@ const ESTADO_CONFIG: Record<
     cls: "bg-amber-50 text-amber-700 border-amber-200",
     dot: "bg-amber-400",
   },
-  EN_CAMINO: {
+  CONFIRMADO: {
     label: "En camino",
     cls: "bg-indigo-50 text-indigo-700 border-indigo-200",
     dot: "bg-indigo-500",
   },
-  ENTREGADO: {
+  TERMINADO: {
     label: "Entregado",
     cls: "bg-teal-50 text-teal-700 border-teal-200",
     dot: "bg-teal-500",
@@ -96,8 +96,7 @@ function renderHeader(pedido: Order): void {
   getEl("breadcrumb-id").textContent = `Pedido #${pedido.id}`;
   getEl("pedido-titulo").textContent = `Pedido #${pedido.id}`;
   getEl("pedido-fecha").textContent = pedido.fecha;
-  getEl("pedido-pago").textContent =
-    FORMA_PAGO_LABEL[pedido.formaPago] ?? pedido.formaPago;
+  getEl("pedido-pago").textContent = pedido.formaPago;
   getEl("pedido-cantidad").textContent =
     `${cantProd} ítem${cantProd !== 1 ? "s" : ""}`;
   getEl("pedido-total").textContent = fmt(total);
@@ -125,7 +124,7 @@ function renderDetalles(detalles: Details[]): void {
             class="w-full h-full object-cover"
             onerror="this.src='https://via.placeholder.com/80x80?text=Sin+imagen'"
           />
-        </div>
+       </div>
 
         <div class="flex-1 min-w-0">
           <div class="flex items-start justify-between gap-2">

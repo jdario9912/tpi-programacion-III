@@ -1,477 +1,227 @@
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Pedidos — Panel de Administración</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-gray-100 font-sans">
-        <div class="flex flex-col h-screen" id="main-layout">
-            <div class="flex flex-1 overflow-hidden" id="secondary-layout">
-                <main class="flex-1 overflow-y-auto p-8">
-                    <!-- Encabezado -->
-                    <div class="flex items-center justify-between mb-6">
-                        <div>
-                            <h1 class="text-xl font-medium text-gray-900">
-                                Pedidos
-                            </h1>
-                            <p class="text-sm text-gray-400 mt-0.5">
-                                Seguimiento y gestión de pedidos
-                            </p>
-                        </div>
-                        <button
-                            onclick="abrirNuevo()"
-                            class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-                        >
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M12 4v16m8-8H4"
-                                />
-                            </svg>
-                            Nuevo pedido
-                        </button>
-                    </div>
-
-                    <!-- Cards resumen -->
-                    <div class="grid grid-cols-4 gap-4 mb-6">
-                        <div
-                            class="bg-white border border-gray-200 rounded-xl p-4"
-                        >
-                            <p class="text-xs text-gray-400 mb-1">
-                                Total pedidos
-                            </p>
-                            <p
-                                id="res-total"
-                                class="text-2xl font-medium text-gray-900"
-                            >
-                                0
-                            </p>
-                        </div>
-                        <div
-                            class="bg-amber-50 border border-amber-200 rounded-xl p-4"
-                        >
-                            <p class="text-xs text-amber-600 mb-1">
-                                Pendientes
-                            </p>
-                            <p
-                                id="res-pendiente"
-                                class="text-2xl font-medium text-amber-800"
-                            >
-                                0
-                            </p>
-                        </div>
-                        <div
-                            class="bg-indigo-50 border border-indigo-200 rounded-xl p-4"
-                        >
-                            <p class="text-xs text-indigo-600 mb-1">
-                                En camino
-                            </p>
-                            <p
-                                id="res-camino"
-                                class="text-2xl font-medium text-indigo-800"
-                            >
-                                0
-                            </p>
-                        </div>
-                        <div
-                            class="bg-teal-50 border border-teal-200 rounded-xl p-4"
-                        >
-                            <p class="text-xs text-teal-600 mb-1">Entregados</p>
-                            <p
-                                id="res-entregado"
-                                class="text-2xl font-medium text-teal-800"
-                            >
-                                0
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Filtros -->
-                    <div class="flex gap-3 mb-5">
-                        <div class="relative flex-1">
-                            <svg
-                                class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"
-                                />
-                            </svg>
-                            <input
-                                type="text"
-                                id="buscador"
-                                placeholder="Buscar por cliente o #pedido..."
-                                oninput="filtrar()"
-                                class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                            />
-                        </div>
-                        <select
-                            id="filtro-estado"
-                            onchange="filtrar()"
-                            class="px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                        >
-                            <option value="">Todos los estados</option>
-                            <option value="pendiente">Pendiente</option>
-                            <option value="en_camino">En camino</option>
-                            <option value="entregado">Entregado</option>
-                            <option value="cancelado">Cancelado</option>
-                        </select>
-                    </div>
-
-                    <!-- Tabla -->
-                    <div
-                        class="bg-white border border-gray-200 rounded-xl overflow-hidden"
-                    >
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr
-                                    class="border-b border-gray-100 bg-gray-50 text-left"
-                                >
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Pedido
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Cliente
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Fecha
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Items
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Total
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500"
-                                    >
-                                        Estado
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 font-medium text-gray-500 text-right"
-                                    >
-                                        Acciones
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-body"></tbody>
-                        </table>
-                        <div
-                            id="estado-vacio"
-                            class="hidden flex flex-col items-center justify-center py-16 text-center"
-                        >
-                            <svg
-                                class="w-10 h-10 text-gray-300 mb-3"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.5"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                                />
-                            </svg>
-                            <p class="text-gray-400 text-sm">
-                                No se encontraron pedidos
-                            </p>
-                        </div>
-                    </div>
-                    <p id="contador" class="text-xs text-gray-400 mt-3"></p>
-                </main>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedidos — Panel de Administración</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="flex flex-col h-screen" id="main-layout">
+      <div class="flex flex-1 overflow-hidden" id="secondary-layout">
+        <main class="flex-1 overflow-y-auto p-8">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-xl font-medium text-gray-900">Pedidos</h1>
+              <p class="text-sm text-gray-400 mt-0.5">
+                Seguimiento y gestión de pedidos
+              </p>
             </div>
-        </div>
-
-        <!-- MODAL Ver / Cambiar estado pedido -->
-        <div
-            id="modal-ver"
-            class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-        >
-            <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-4 p-6">
-                <div class="flex items-center justify-between mb-5">
-                    <h2 class="text-base font-medium text-gray-900">
-                        Detalle del pedido
-                    </h2>
-                    <button
-                        onclick="cerrarVer()"
-                        class="text-gray-400 hover:text-gray-600"
-                    >
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div id="ver-body" class="flex flex-col gap-3 text-sm"></div>
-                <div class="mt-5">
-                    <label class="block text-xs font-medium text-gray-600 mb-1"
-                        >Cambiar estado</label
-                    >
-                    <div class="flex gap-2">
-                        <select
-                            id="nuevo-estado"
-                            class="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                        >
-                            <option value="pendiente">Pendiente</option>
-                            <option value="en_camino">En camino</option>
-                            <option value="entregado">Entregado</option>
-                            <option value="cancelado">Cancelado</option>
-                        </select>
-                        <button
-                            onclick="cambiarEstado()"
-                            class="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                        >
-                            Actualizar
-                        </button>
-                    </div>
-                </div>
-                <div class="flex justify-end mt-4">
-                    <button
-                        onclick="cerrarVer()"
-                        class="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                        Cerrar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL Nuevo pedido -->
-        <div
-            id="modal-nuevo"
-            class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-        >
-            <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-4 p-6">
-                <div class="flex items-center justify-between mb-5">
-                    <h2 class="text-base font-medium text-gray-900">
-                        Nuevo pedido
-                    </h2>
-                    <button
-                        onclick="cerrarNuevo()"
-                        class="text-gray-400 hover:text-gray-600"
-                    >
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex flex-col gap-4">
-                    <div>
-                        <label
-                            class="block text-xs font-medium text-gray-600 mb-1"
-                            >Nombre del cliente *</label
-                        >
-                        <input
-                            id="n-cliente"
-                            type="text"
-                            placeholder="Ej: Juan Pérez"
-                            class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                        />
-                        <p
-                            id="err-cliente"
-                            class="text-xs text-red-500 mt-1 hidden"
-                        >
-                            El nombre es obligatorio
-                        </p>
-                    </div>
-                    <div>
-                        <label
-                            class="block text-xs font-medium text-gray-600 mb-1"
-                            >Email</label
-                        >
-                        <input
-                            id="n-email"
-                            type="email"
-                            placeholder="cliente@email.com"
-                            class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                        />
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label
-                                class="block text-xs font-medium text-gray-600 mb-1"
-                                >Total *</label
-                            >
-                            <div class="relative">
-                                <span
-                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"
-                                    >$</span
-                                >
-                                <input
-                                    id="n-total"
-                                    type="number"
-                                    min="0"
-                                    placeholder="0.00"
-                                    class="w-full pl-7 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                                />
-                            </div>
-                            <p
-                                id="err-total"
-                                class="text-xs text-red-500 mt-1 hidden"
-                            >
-                                Ingresá un total válido
-                            </p>
-                        </div>
-                        <div>
-                            <label
-                                class="block text-xs font-medium text-gray-600 mb-1"
-                                >Cantidad de items</label
-                            >
-                            <input
-                                id="n-items"
-                                type="number"
-                                min="1"
-                                placeholder="1"
-                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                            />
-                        </div>
-                    </div>
-                    <div>
-                        <label
-                            class="block text-xs font-medium text-gray-600 mb-1"
-                            >Dirección de entrega</label
-                        >
-                        <input
-                            id="n-dir"
-                            type="text"
-                            placeholder="Calle, número, ciudad"
-                            class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                        />
-                    </div>
-                </div>
-                <div class="flex justify-end gap-2 mt-6">
-                    <button
-                        onclick="cerrarNuevo()"
-                        class="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        onclick="crearPedido()"
-                        class="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                    >
-                        Crear pedido
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL Eliminar -->
-        <div
-            id="modal-del"
-            class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-        >
-            <div class="bg-white rounded-xl shadow-lg w-full max-w-sm mx-4 p-6">
-                <div class="flex items-start gap-3 mb-5">
-                    <div
-                        class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5"
-                    >
-                        <svg
-                            class="w-4 h-4 text-red-600"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                            />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-base font-medium text-gray-900">
-                            Eliminar pedido
-                        </h2>
-                        <p class="text-sm text-gray-500 mt-1">
-                            ¿Seguro que querés eliminar el pedido
-                            <strong id="del-num" class="text-gray-800"></strong
-                            >? Esta acción no se puede deshacer.
-                        </p>
-                    </div>
-                </div>
-                <div class="flex justify-end gap-2">
-                    <button
-                        onclick="cerrarDel()"
-                        class="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        onclick="confirmarDel()"
-                        class="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                    >
-                        Eliminar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Toast -->
-        <div
-            id="toast"
-            class="hidden fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gray-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg"
-        >
-            <svg
-                class="w-4 h-4 text-green-400"
+          </div>
+          <div
+            class="bg-white border border-gray-200 rounded-xl overflow-hidden"
+          >
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-100 bg-gray-50 text-left">
+                  <th class="px-5 py-3 font-medium text-gray-500">Pedido</th>
+                  <th class="px-5 py-3 font-medium text-gray-500">Fecha</th>
+                  <th class="px-5 py-3 font-medium text-gray-500">Items</th>
+                  <th class="px-5 py-3 font-medium text-gray-500">Total</th>
+                  <th class="px-5 py-3 font-medium text-gray-500">Estado</th>
+                  <th class="px-5 py-3 font-medium text-gray-500 text-right">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="tabla-body"></tbody>
+            </table>
+            <div
+              id="estado-vacio"
+              class="hidden flex flex-col items-center justify-center py-16 text-center"
+            >
+              <svg
+                class="w-10 h-10 text-gray-300 mb-3"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2.5"
+                stroke-width="1.5"
                 viewBox="0 0 24 24"
-            >
+              >
                 <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M5 13l4 4L19 7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 />
+              </svg>
+              <p class="text-gray-400 text-sm">No se encontraron pedidos</p>
+            </div>
+          </div>
+          <p id="contador" class="text-xs text-gray-400 mt-3"></p>
+        </main>
+      </div>
+    </div>
+
+    <dialog
+      id="modal-ver-pedido"
+      class="backdrop:bg-black/50 rounded-xl w-[700px]"
+    >
+      <form class="bg-white p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="text-base font-medium text-gray-900">
+            Detalle del pedido
+          </h2>
+
+          <button class="text-gray-400 hover:text-gray-600">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
-            <span id="toast-msg"></span>
+          </button>
         </div>
-    </body>
-    <script type="module" src="pedidos.ts"></script>
+
+        <div class="grid grid-cols-2 gap-4 mb-5 text-sm">
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="text-xs text-gray-500">Pedido</p>
+            <p id="pedido-id" class="font-medium"></p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="text-xs text-gray-500">Fecha</p>
+            <p id="pedido-fecha" class="font-medium"></p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="text-xs text-gray-500">Forma de pago</p>
+            <p id="pedido-pago" class="font-medium"></p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="text-xs text-gray-500">Total</p>
+            <p id="pedido-total" class="font-semibold text-green-600"></p>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <h3 class="text-sm font-medium text-gray-900 mb-2">Productos</h3>
+
+          <div class="border rounded-lg overflow-hidden">
+            <table class="w-full text-sm">
+              <thead class="bg-gray-100 text-gray-600">
+                <tr>
+                  <th class="text-left px-3 py-2">Producto</th>
+                  <th class="text-center px-3 py-2">Cant.</th>
+                  <th class="text-right px-3 py-2">Precio</th>
+                  <th class="text-right px-3 py-2">Subtotal</th>
+                </tr>
+              </thead>
+
+              <tbody id="detalle-productos"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <label class="block text-xs font-medium text-gray-600 mb-1">
+            Cambiar estado
+          </label>
+          <input type="hidden" id="pedido_id_hidden" name="pedido_id_hidden" />
+          <select
+            id="estado"
+            name="estado"
+            class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          >
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="CONFIRMADO">Confirmado</option>
+            <option value="TERMINADO">Terminado</option>
+            <option value="CANCELADO">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            data-close
+            class="px-4 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- <dialog id="modal-ver-pedido" class="backdrop:bg-black/50 rounded-xl w-150"> -->
+    <!--   <form class="bg-white p-6"> -->
+    <!--     <div class="flex items-center justify-between mb-5"> -->
+    <!--       <h2 class="text-base font-medium text-gray-900"> -->
+    <!--         Detalle del pedido -->
+    <!--       </h2> -->
+    <!--       <button class="text-gray-400 hover:text-gray-600"> -->
+    <!--         <svg -->
+    <!--           class="w-5 h-5" -->
+    <!--           fill="none" -->
+    <!--           stroke="currentColor" -->
+    <!--           stroke-width="2" -->
+    <!--           viewBox="0 0 24 24" -->
+    <!--         > -->
+    <!--           <path -->
+    <!--             stroke-linecap="round" -->
+    <!--             stroke-linejoin="round" -->
+    <!--             d="M6 18L18 6M6 6l12 12" -->
+    <!--           /> -->
+    <!--         </svg> -->
+    <!--       </button> -->
+    <!--     </div> -->
+    <!--     <div id="ver-body" class="flex flex-col gap-3 text-sm"></div> -->
+    <!--     <div class="mt-5"> -->
+    <!--       <label class="block text-xs font-medium text-gray-600 mb-1" -->
+    <!--         >Cambiar estado</label -->
+    <!--       > -->
+    <!--       <div class="flex gap-2"> -->
+    <!--         <select -->
+    <!--           id="estado" -->
+    <!--           name="estado" -->
+    <!--           class="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300" -->
+    <!--         > -->
+    <!--           <option value="PENDIENTE">Pendiente</option> -->
+    <!--           <option value="CONFIRMADO">Confirmado</option> -->
+    <!--           <option value="TERMINADO">Terminado</option> -->
+    <!--           <option value="CANCELADO">Cancelado</option> -->
+    <!--         </select> -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--     <div class="flex justify-end gap-2 mt-2"> -->
+    <!--       <button -->
+    <!--         type="button" -->
+    <!--         data-close -->
+    <!--         class="px-4 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100" -->
+    <!--       > -->
+    <!--         Cancelar -->
+    <!--       </button> -->
+    <!--       <button -->
+    <!--         type="submit" -->
+    <!--         class="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700" -->
+    <!--       > -->
+    <!--         Guardar -->
+    <!--       </button> -->
+    <!--     </div> -->
+    <!--   </form> -->
+    <!-- </dialog> -->
+  </body>
+  <script type="module" src="pedidos.ts"></script>
 </html>

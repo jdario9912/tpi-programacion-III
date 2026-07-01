@@ -131,7 +131,8 @@ public class PedidoService {
         Pedido found = this.pedidoRepository.findByIdOrThrow(id);
         found.setFormaPago(pedido.formaPago() != null ? pedido.formaPago() : found.getFormaPago());
         found.setEstado(pedido.estado() != null ? pedido.estado() : found.getEstado());
-        return PedidoDto.from(found);
+        Pedido updated = this.pedidoRepository.save(found);
+        return PedidoDto.from(updated);
     }
 
     public void delete(Long id) {
