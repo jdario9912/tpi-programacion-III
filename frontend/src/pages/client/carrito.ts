@@ -1,3 +1,4 @@
+import { ordersApi } from "../../api/orders/orders.api";
 import type { User } from "../../api/users/users.types";
 import { initHeader } from "../../components/header";
 import { headerCliente } from "../../components/header-cliente";
@@ -6,12 +7,21 @@ import type { ProductCartItem } from "../../storage/repositories/cart.types";
 import { loginPath } from "../../utils/const";
 import { getUSer, removeUser } from "../../utils/localStorage";
 import { navigate } from "../../utils/navigate";
+import type { Estado, FormaPago } from "../../api/orders/orders.types";
+import { FormDialog } from "../../components/form-dialog";
 
 const user = getUSer();
 const parsedUser = JSON.parse(user!) as User;
 if (parsedUser.rol !== "USUARIO") {
   removeUser();
   navigate(loginPath);
+}
+
+interface ProductoForm {
+  telefono: string;
+  direccion: string;
+  formaPago: FormaPago;
+  notas?: string;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -27,6 +37,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     carritoBadge.classList.remove("hidden");
     carritoBadge.textContent = String(cartCount);
   }
+
+  const dialogPedido = document.getElementById(
+    "modal-crear-pedido",
+  ) as HTMLDialogElement;
+  const btnModalPedido = document.getElementById(
+    "crear-pedido",
+  ) as HTMLButtonElement;
+  const formaPagoSelect = document.getElementById(
+    "forma-pago",
+  ) as HTMLSelectElement;
+  formaPagoSelect.classList.add("capitalize");
+  const formasPago = [
+    "EFECTIVO",
+    "TARJETA",
+    "TRANSFERENCIA",
+  ] as unknown as FormaPago[];
+  formasPago.forEach((forma) => {
+    const option = document.createElement("option") as HTMLOptionElement;
+    option.value = String(forma);
+    option.textContent = String(forma).toLowerCase();
+    option.classList.add("capitalize");
+    formaPagoSelect.appendChild(option);
+  });
+
+  const crearPedidoDialog = new FormDialog<ProductoForm>(dialogPedido, {
+    onSubmit: async (data) => {
+      const carrito = cartRepository.getAll();
+      if (!carrito.length) return;
+
+      try {
+        await ordersApi.create({
+          idUsuario: parsedUser.id,
+          detallePedidos: carrito.map((item) => ({
+            idProducto: item.id,
+            cantidad: item.cantidad,
+          })),
+          formaPago: data.formaPago,
+          estado: "PENDIENTE" as unknown as Estado,
+        });
+        vaciarCarrito();
+        navigate("home.html");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
+  btnModalPedido.addEventListener("click", () => {
+    crearPedidoDialog.open();
+  });
   render();
 });
 

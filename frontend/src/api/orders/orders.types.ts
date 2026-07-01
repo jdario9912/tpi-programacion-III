@@ -1,10 +1,10 @@
 import type { Product } from "../products/products.types";
 
-type Estado = {
+export type Estado = {
   PENDIENTE: "PENDIENTE";
 };
 
-type FormaPago = {
+export type FormaPago = {
   EFECTIVO: "EFECTIVO";
   TARJETA: "TARJETA";
   TRASNFERENCIA: "TRASNFERENCIA";

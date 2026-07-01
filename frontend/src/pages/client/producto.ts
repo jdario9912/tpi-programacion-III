@@ -106,7 +106,7 @@ if (!producto) {
                 : `
             <div class="flex flex-col gap-2">
               <p class="text-sm text-red-400 bg-red-50 border border-red-200 rounded-lg px-4 py-3">Este producto no tiene stock disponible.</p>
-              <a href="catalogo.html"
+              <a href="home.html"
                 class="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium py-3 rounded-xl transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 Volver al catálogo

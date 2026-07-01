@@ -84,6 +84,7 @@
 
               <div class="flex flex-col gap-2 mt-5">
                 <button
+                  id="crear-pedido"
                   class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
                   <svg
@@ -126,6 +127,91 @@
         </div>
       </div>
     </div>
+    <dialog
+      id="modal-crear-pedido"
+      class="backdrop:bg-black/50 rounded-xl p-0 w-full max-w-md"
+    >
+      <form
+        id="form-crear-pedido"
+        method="dialog"
+        class="flex flex-col gap-4 p-6"
+      >
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold text-gray-900">Confirmar pedido</h2>
+          <button
+            type="button"
+            data-close
+            class="text-gray-400 hover:text-gray-600"
+            aria-label="Cerrar"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="telefono" class="text-sm font-medium text-gray-700"
+            >Telefono</label
+          >
+          <input
+            id="telefono"
+            name="telefono"
+            type="text"
+            required
+            class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Ej: +56912345678"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="direccion" class="text-sm font-medium text-gray-700"
+            >Descripción</label
+          >
+          <textarea
+            id="direccion"
+            name="direccion"
+            rows="3"
+            class="border border-gray-300 rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Dirección de entrega"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="forma-pago" class="text-sm font-medium text-gray-700"
+            >Forma pago</label
+          >
+          <select id="forma-pago" name="forma-pago"></select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="notas" class="text-sm font-medium text-gray-700"
+            >Notas</label
+          >
+          <textarea
+            id="notas"
+            name="notas"
+            rows="3"
+            class="border border-gray-300 rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Notas adicionales (opcional)"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-2">
+          <button
+            type="button"
+            data-close
+            class="px-4 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
+          >
+            Confirmar pedido
+          </button>
+        </div>
+      </form>
+    </dialog>
     <script type="module" src="carrito.js"></script>
   </body>
 </html>
