@@ -31,6 +31,8 @@ export const headerCliente = (user: string) => {
       </a>
       <div class="flex items-center gap-x-4">
         <div>${user}</div>
+        <a href="home.html" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors">Inicio</a>
+        <a href="pedidos.html" class="text-sm text-gray-600 hover:text-indigo-600 transition-colors">Mis pedidos</a>
         <a
           href="carrito.html"
           class="relative flex items-center gap-2 text-sm text-gray-600 hover:text-indigo-600 transition-colors"

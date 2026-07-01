@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mis pedidos — MiComercio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans min-h-screen">
+    <div class="" id="main-layout">
+      <div class="p-8">
+        <div class="mb-7">
+          <h1 class="text-xl font-medium text-gray-900">Mis pedidos</h1>
+          <p class="text-sm text-gray-400 mt-0.5">Historial de tus compras</p>
+        </div>
+        <div id="lista-pedidos" class="flex flex-col gap-3"></div>
+
+        <div
+          id="estado-vacio"
+          class="hidden flex flex-col items-center justify-center py-24 text-center"
+        >
+          <svg
+            class="w-14 h-14 text-gray-300 mb-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+            />
+          </svg>
+          <p class="text-gray-400 text-sm mb-4">
+            No tenés pedidos en este estado
+          </p>
+          <a
+            href="catalogo.html"
+            class="text-sm text-indigo-600 hover:underline"
+            >Ver catálogo</a
+          >
+        </div>
+      </div>
+    </div>
+    <script type="module" src="pedidos.ts"></script>
+  </body>
+</html>

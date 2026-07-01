@@ -10,7 +10,7 @@ export type FormaPago = {
   TRASNFERENCIA: "TRASNFERENCIA";
 };
 
-type Details = {
+export type Details = {
   id: number;
   cantidad: number;
   producto: Product;
