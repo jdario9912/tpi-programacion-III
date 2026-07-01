@@ -4,7 +4,7 @@ import { initHeader } from "../../components/header";
 import { headerCliente } from "../../components/header-cliente";
 import { cartRepository } from "../../storage/repositories/cart.repository";
 import type { ProductCartItem } from "../../storage/repositories/cart.types";
-import { loginPath } from "../../utils/const";
+import { clientOrdersPath, loginPath } from "../../utils/const";
 import { getUSer, removeUser } from "../../utils/localStorage";
 import { navigate } from "../../utils/navigate";
 import type { Estado, FormaPago } from "../../api/orders/orders.types";
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           estado: "PENDIENTE" as unknown as Estado,
         });
         vaciarCarrito();
-        navigate("home.html");
+        navigate(clientOrdersPath);
       } catch (error) {
         console.log(error);
       }

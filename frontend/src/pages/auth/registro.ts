@@ -67,9 +67,3 @@ formRegistro.addEventListener("submit", async (e) => {
   saveUser(usuarioRegisted);
   navigate(clientPath);
 });
-
-// function mostrarAlert(msg) {
-// const alertEl = document.getElementById("alert");
-// document.getElementById("alert-msg").textContent = msg;
-// alertEl.classList.remove("hidden");
-// }

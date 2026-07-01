@@ -6,3 +6,4 @@ export const productsPath: string = "/src/pages/admin/productos.html";
 export const ordersPath: string = "/src/pages/admin/pedidos.html";
 export const categoriesPath: string = "/src/pages/admin/categorias.html";
 export const unauthorizedPath: string = "/src/pages/auth/unauthorized.html";
+export const clientOrdersPath: string = "/src/pages/client/pedidos.html";
