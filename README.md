@@ -4,6 +4,8 @@ E-commerce de local de comida que permite gestionar productos y pedidos de clien
 
 Link al repo [acá](https://github.com/jdario9912/tpi-programacion-III).
 
+Link al video de demostración [acá](https://youtu.be/FjUqiGw57Wc).
+
 Informe: ver el archivo `Informe TPI Programación III.pdf`
 
 ### Ejecutar el proyecto
