@@ -20,6 +20,7 @@ public abstract class Base {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Builder.Default
     @CreationTimestamp
     private LocalDate createdAt = LocalDate.now();
 

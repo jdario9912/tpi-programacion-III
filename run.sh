@@ -1,7 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo "Iniciando Backend..."
-gnome-terminal -- bash -c "./backend/gradlew -p backend bootRun; exec bash"
+set -e
 
-echo "Iniciando Frontend..."
-gnome-terminal -- bash -c "pnpm -C frontend dev; exec bash"
+echo "📦 Instalando dependencias del frontend..."
+pnpm -C frontend install
+
+echo "🚀 Iniciando backend..."
+./backend/gradlew -p backend bootRun &
+
+echo "🚀 Iniciando frontend..."
+pnpm -C frontend dev
+
+wait

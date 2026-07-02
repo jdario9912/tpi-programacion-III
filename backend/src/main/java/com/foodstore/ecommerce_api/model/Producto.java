@@ -33,6 +33,7 @@ public class Producto extends Base {
     private String imagen;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean disponible = true;
 
     @ManyToOne(fetch = FetchType.LAZY)

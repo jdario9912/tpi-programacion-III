@@ -1,14 +1,23 @@
+# Food Store
+
+E-commerce de local de comida que permite gestionar productos y pedidos de clientes.
+
+Link al repo [acá](https://github.com/jdario9912/tpi-programacion-III).
+
+Informe: ver el archivo `Informe TPI Programación III.pdf`
+
 ### Ejecutar el proyecto
 
 **Linux o Mac** 
 
-Dar permisos de ejecución al script
+1. Dar permisos de ejecución a los scripts: uno para iniciar y otro para detener el proyecto.
 
 ```sh
 chmod +x run.sh
+chmod +x stop.sh
 ```
 
-Ejecutar el script
+2. Ejecutar el script
 
 ```sh
 ./run.sh
@@ -28,4 +37,21 @@ Ejecutar el script en PowerShell
 
 ```powershell
 .\run.ps1
+```
+
+### Detener el proyecto
+**Linux o Mac**
+
+```sh
+./stop.sh
+```
+
+**Windows**
+
+```cmd
+stop.bat
+```
+
+```powershell
+.\stop.ps1
 ```

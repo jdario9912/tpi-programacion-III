@@ -13,8 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "pedidos")
-@ToString(callSuper = true, exclude = "detallePedido")
-@EqualsAndHashCode(callSuper = true, exclude = "detallePedido")
+@ToString(callSuper = true, exclude = "detallePedidos")
+@EqualsAndHashCode(callSuper = true, exclude = "detallePedidos")
 @SuperBuilder
 @NoArgsConstructor
 
@@ -29,6 +29,7 @@ public class Pedido extends Base {
     private Estado estado;
 
     @Getter
+    @Builder.Default
     private BigDecimal total = BigDecimal.ZERO;
 
     @Getter
@@ -38,6 +39,7 @@ public class Pedido extends Base {
 
     @Getter
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<DetallePedido> detallePedidos = new HashSet<>();
 
     public void addDetallePedido(DetallePedido detallePedido) {

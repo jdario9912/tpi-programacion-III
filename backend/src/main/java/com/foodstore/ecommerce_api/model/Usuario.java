@@ -47,6 +47,7 @@ public class Usuario extends Base {
     @Getter
     @JoinColumn(name = "usuario_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
     private Set<Pedido> pedidos = new HashSet<>();
 
     public void addPedido (Pedido pedido) {

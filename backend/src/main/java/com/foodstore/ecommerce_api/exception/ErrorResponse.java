@@ -15,5 +15,7 @@ public class ErrorResponse {
     private int status;
     private String message;
     private LocalDateTime timestamp;
+
+    @Builder.Default
     private Map<String, String> errors = new HashMap<>();
 }
